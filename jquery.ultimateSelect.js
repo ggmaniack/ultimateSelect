@@ -1,22 +1,22 @@
 /*
- * jQuery selectBox - A cosmetic, styleable replacement for SELECT elements
+ * jQuery ultimateSelect - A cosmetic, styleable replacement for SELECT elements
  *
  * Licensed under the MIT license: http://opensource.org/licenses/MIT
  *
- * v1.2.0
+ * v1.3.0
  *
- * https://github.com/marcj/jquery-selectBox
+ * https://github.com/ionutvmi/ ultimateSelect
  */
 ;(function ($) {
 
     /**
-     * SelectBox class.
+     * UltimateSelect class.
      *
      * @param {HTMLElement|jQuery} select If it's a jQuery object, we use the first element.
      * @param {Object}             options
      * @constructor
      */
-    var SelectBox = this.SelectBox = function (select, options) {
+    var UltimateSelect = this.UltimateSelect = function (select, options) {
         if (select instanceof jQuery) {
             if (select.length > 0) {
                 select = select[0];
@@ -47,20 +47,20 @@
     /**
      * @type {String}
      */
-    SelectBox.prototype.version = '1.2.0';
+    UltimateSelect.prototype.version = '1.2.0';
 
     /**
      * @param {Object} options
      *
      * @returns {Boolean}
      */
-    SelectBox.prototype.init = function (options) {
+    UltimateSelect.prototype.init = function (options) {
         var select = $(this.selectElement);
-        if (select.data('selectBox-control')) {
+        if (select.data('ultimateSelect-control')) {
             return false;
         }
 
-        var control    = $('<a class="selectBox" />')
+        var control    = $('<a class="ultimateSelect" />')
             , inline   = select.attr('multiple') || parseInt(select.attr('size')) > 1
             , settings = options || {}
             , tabIndex = parseInt(select.prop('tabindex')) || 0
@@ -72,37 +72,37 @@
             .attr('title', select.attr('title') || '')
             .attr('tabindex', tabIndex)
             .css('display', 'inline-block')
-            .bind('focus.selectBox', function () {
+            .bind('focus.ultimateSelect', function () {
                 if (this !== document.activeElement && document.body !== document.activeElement) {
                     $(document.activeElement).blur();
                 }
-                if (control.hasClass('selectBox-active')) {
+                if (control.hasClass('ultimateSelect-active')) {
                     return;
                 }
-                control.addClass('selectBox-active');
+                control.addClass('ultimateSelect-active');
                 select.trigger('focus');
             })
-            .bind('blur.selectBox', function () {
-                if (!control.hasClass('selectBox-active')) {
+            .bind('blur.ultimateSelect', function () {
+                if (!control.hasClass('ultimateSelect-active')) {
                     return;
                 }
-                control.removeClass('selectBox-active');
+                control.removeClass('ultimateSelect-active');
                 select.trigger('blur');
             });
 
-        if (!$(window).data('selectBox-bindings')) {
+        if (!$(window).data('ultimateSelect-bindings')) {
             $(window)
-                .data('selectBox-bindings', true)
-                .bind('scroll.selectBox', (settings.hideOnWindowScroll) ? this.hideMenus : $.noop)
-                .bind('resize.selectBox', this.hideMenus);
+                .data('ultimateSelect-bindings', true)
+                .bind('scroll.ultimateSelect', (settings.hideOnWindowScroll) ? this.hideMenus : $.noop)
+                .bind('resize.ultimateSelect', this.hideMenus);
         }
 
         if (select.attr('disabled')) {
-            control.addClass('selectBox-disabled');
+            control.addClass('ultimateSelect-disabled');
         }
 
         // Focus on control when label is clicked
-        select.bind('click.selectBox', function (event) {
+        select.bind('click.ultimateSelect', function (event) {
             control.focus();
             event.preventDefault();
         });
@@ -114,21 +114,21 @@
 
             control
                 .append(options)
-                .data('selectBox-options', options).addClass('selectBox-inline selectBox-menuShowing')
-                .bind('keydown.selectBox', function (event) {
+                .data('ultimateSelect-options', options).addClass('ultimateSelect-inline ultimateSelect-menuShowing')
+                .bind('keydown.ultimateSelect', function (event) {
                     self.handleKeyDown(event);
                 })
-                .bind('keypress.selectBox',function (event) {
+                .bind('keypress.ultimateSelect',function (event) {
                     self.handleKeyPress(event);
                 })
-                .bind('mousedown.selectBox',function (event) {
+                .bind('mousedown.ultimateSelect',function (event) {
                     if (1 !== event.which) {
                         return;
                     }
-                    if ($(event.target).is('A.selectBox-inline')) {
+                    if ($(event.target).is('A.ultimateSelect-inline')) {
                         event.preventDefault();
                     }
-                    if (!control.hasClass('selectBox-focus')) {
+                    if (!control.hasClass('ultimateSelect-focus')) {
                         control.focus();
                     }
                 })
@@ -147,16 +147,16 @@
                     })
                     .show()
                     .appendTo('body');
-                tmp.find('.selectBox-options').html('<li><a>\u00A0</a></li>');
-                var optionHeight = parseInt(tmp.find('.selectBox-options A:first').html('&nbsp;').outerHeight());
+                tmp.find('.ultimateSelect-options').html('<li><a>\u00A0</a></li>');
+                var optionHeight = parseInt(tmp.find('.ultimateSelect-options A:first').html('&nbsp;').outerHeight());
                 tmp.remove();
                 control.height(optionHeight * size);
             }
             this.disableSelection(control);
         } else {
             // Dropdown controls
-            var label = $('<span class="selectBox-label" />'),
-                arrow = $('<span class="selectBox-arrow" />');
+            var label = $('<span class="ultimateSelect-label" />'),
+                arrow = $('<span class="ultimateSelect-arrow" />');
 
             // Update label
             label.attr('class', this.getLabelClass()).text(this.getLabelText());
@@ -164,38 +164,38 @@
             options.appendTo('BODY');
 
             control
-                .data('selectBox-options', options)
-                .addClass('selectBox-dropdown')
+                .data('ultimateSelect-options', options)
+                .addClass('ultimateSelect-dropdown')
                 .append(label)
                 .append(arrow)
-                .bind('mousedown.selectBox', function (event) {
+                .bind('mousedown.ultimateSelect', function (event) {
                     if (1 === event.which) {
-                        if (control.hasClass('selectBox-menuShowing')) {
+                        if (control.hasClass('ultimateSelect-menuShowing')) {
                             self.hideMenus();
                         } else {
                             event.stopPropagation();
                             // Webkit fix to prevent premature selection of options
                             options
-                                .data('selectBox-down-at-x', event.screenX)
-                                .data('selectBox-down-at-y', event.screenY);
+                                .data('ultimateSelect-down-at-x', event.screenX)
+                                .data('ultimateSelect-down-at-y', event.screenY);
                             self.showMenu();
                         }
                     }
                 })
-                .bind('keydown.selectBox', function (event) {
+                .bind('keydown.ultimateSelect', function (event) {
                     self.handleKeyDown(event);
                 })
-                .bind('keypress.selectBox', function (event) {
+                .bind('keypress.ultimateSelect', function (event) {
                     self.handleKeyPress(event);
                 })
-                .bind('open.selectBox',function (event, triggerData) {
-                    if (triggerData && triggerData._selectBox === true) {
+                .bind('open.ultimateSelect',function (event, triggerData) {
+                    if (triggerData && triggerData._ultimateSelect === true) {
                         return;
                     }
                     self.showMenu();
                 })
-                .bind('close.selectBox', function (event, triggerData) {
-                    if (triggerData && triggerData._selectBox === true) {
+                .bind('close.ultimateSelect', function (event, triggerData) {
+                    if (triggerData && triggerData._ultimateSelect === true) {
                         return;
                     }
                     self.hideMenus();
@@ -214,9 +214,9 @@
         }
         // Store data for later use and show the control
         select
-            .addClass('selectBox')
-            .data('selectBox-control', control)
-            .data('selectBox-settings', settings)
+            .addClass('ultimateSelect')
+            .data('ultimateSelect-control', control)
+            .data('ultimateSelect-settings', settings)
             .hide();
     };
 
@@ -224,7 +224,7 @@
      * @param {String} type 'inline'|'dropdown'
      * @returns {jQuery}
      */
-    SelectBox.prototype.getOptions = function (type) {
+    UltimateSelect.prototype.getOptions = function (type) {
         var options;
         var select = $(this.selectElement);
         var self   = this;
@@ -244,7 +244,7 @@
                     }
                 } else {
                     // If the element is an option group, add the group and call this function on it.
-                    var optgroup = $('<li class="selectBox-optgroup" />');
+                    var optgroup = $('<li class="ultimateSelect-optgroup" />');
                     optgroup.text($(this).attr('label'));
                     options.append(optgroup);
                     options = _getOptions($(this), options);
@@ -256,26 +256,26 @@
 
         switch (type) {
             case 'inline':
-                options = $('<ul class="selectBox-options" />');
+                options = $('<ul class="ultimateSelect-options" />');
                 options = _getOptions(select, options);
                 options
                     .find('A')
-                    .bind('mouseover.selectBox', function (event) {
+                    .bind('mouseover.ultimateSelect', function (event) {
                         self.addHover($(this).parent());
                     })
-                    .bind('mouseout.selectBox',function (event) {
+                    .bind('mouseout.ultimateSelect',function (event) {
                         self.removeHover($(this).parent());
                     })
-                    .bind('mousedown.selectBox',function (event) {
+                    .bind('mousedown.ultimateSelect',function (event) {
                         if (1 !== event.which) {
                             return
                         }
                         event.preventDefault(); // Prevent options from being "dragged"
-                        if (!select.selectBox('control').hasClass('selectBox-active')) {
-                            select.selectBox('control').focus();
+                        if (!select.ultimateSelect('control').hasClass('ultimateSelect-active')) {
+                            select.ultimateSelect('control').focus();
                         }
                     })
-                    .bind('mouseup.selectBox', function (event) {
+                    .bind('mouseup.ultimateSelect', function (event) {
                         if (1 !== event.which) {
                             return;
                         }
@@ -286,45 +286,45 @@
                 this.disableSelection(options);
                 return options;
             case 'dropdown':
-                options = $('<ul class="selectBox-dropdown-menu selectBox-options" />');
+                options = $('<ul class="ultimateSelect-dropdown-menu ultimateSelect-options" />');
                 options = _getOptions(select, options);
 
                 options
-                    .data('selectBox-select', select)
+                    .data('ultimateSelect-select', select)
                     .css('display', 'none')
                     .appendTo('BODY')
                     .find('A')
-                    .bind('mousedown.selectBox', function (event) {
+                    .bind('mousedown.ultimateSelect', function (event) {
                         if (event.which === 1) {
                             event.preventDefault(); // Prevent options from being "dragged"
-                            if (event.screenX === options.data('selectBox-down-at-x') &&
-                                event.screenY === options.data('selectBox-down-at-y')) {
-                                options.removeData('selectBox-down-at-x').removeData('selectBox-down-at-y');
+                            if (event.screenX === options.data('ultimateSelect-down-at-x') &&
+                                event.screenY === options.data('ultimateSelect-down-at-y')) {
+                                options.removeData('ultimateSelect-down-at-x').removeData('ultimateSelect-down-at-y');
                                 if (/android/i.test(navigator.userAgent.toLowerCase()) &&
                                     /chrome/i.test(navigator.userAgent.toLowerCase())) {
-                                    self.selectOption($(this).parent());        
+                                    self.selectOption($(this).parent());
                                 }
                                 self.hideMenus();
                             }
                         }
                     })
-                    .bind('mouseup.selectBox', function (event) {
+                    .bind('mouseup.ultimateSelect', function (event) {
                         if (1 !== event.which) {
                             return;
                         }
-                        if (event.screenX === options.data('selectBox-down-at-x') &&
-                            event.screenY === options.data('selectBox-down-at-y')) {
+                        if (event.screenX === options.data('ultimateSelect-down-at-x') &&
+                            event.screenY === options.data('ultimateSelect-down-at-y')) {
                             return;
                         } else {
-                            options.removeData('selectBox-down-at-x').removeData('selectBox-down-at-y');
+                            options.removeData('ultimateSelect-down-at-x').removeData('ultimateSelect-down-at-y');
                         }
                         self.selectOption($(this).parent());
                         self.hideMenus();
                     })
-                    .bind('mouseover.selectBox', function (event) {
+                    .bind('mouseover.ultimateSelect', function (event) {
                         self.addHover($(this).parent());
                     })
-                    .bind('mouseout.selectBox', function (event) {
+                    .bind('mouseout.ultimateSelect', function (event) {
                         self.removeHover($(this).parent());
                     });
 
@@ -333,9 +333,9 @@
                 if ('' !== classes) {
                     classes = classes.split(' ');
                     for (var i = 0; i < classes.length; i++) {
-                        options.addClass(classes[i] + '-selectBox-dropdown-menu');
+                        options.addClass(classes[i] + '-ultimateSelect-dropdown-menu');
                     }
-                    
+
                 }
                 this.disableSelection(options);
                 return options;
@@ -347,9 +347,9 @@
      *
      * @returns {String}
      */
-    SelectBox.prototype.getLabelClass = function () {
+    UltimateSelect.prototype.getLabelClass = function () {
         var selected = $(this.selectElement).find('OPTION:selected');
-        return ('selectBox-label ' + (selected.attr('class') || '')).replace(/\s+$/, '');
+        return ('ultimateSelect-label ' + (selected.attr('class') || '')).replace(/\s+$/, '');
     };
 
     /**
@@ -357,7 +357,7 @@
      *
      * @returns {String}
      */
-    SelectBox.prototype.getLabelText = function () {
+    UltimateSelect.prototype.getLabelText = function () {
         var selected = $(this.selectElement).find('OPTION:selected');
         return selected.text() || '\u00A0';
     };
@@ -366,57 +366,57 @@
      * Sets the label.
      * This method uses the getLabelClass() and getLabelText() methods.
      */
-    SelectBox.prototype.setLabel = function () {
+    UltimateSelect.prototype.setLabel = function () {
         var select = $(this.selectElement);
-        var control = select.data('selectBox-control');
+        var control = select.data('ultimateSelect-control');
         if (!control) {
             return;
         }
 
         control
-            .find('.selectBox-label')
+            .find('.ultimateSelect-label')
             .attr('class', this.getLabelClass())
             .text(this.getLabelText());
     };
 
     /**
-     * Destroys the SelectBox instance and shows the origin select element.
+     * Destroys the UltimateSelect instance and shows the origin select element.
      *
      */
-    SelectBox.prototype.destroy = function () {
+    UltimateSelect.prototype.destroy = function () {
         var select = $(this.selectElement);
-        var control = select.data('selectBox-control');
+        var control = select.data('ultimateSelect-control');
         if (!control) {
             return;
         }
 
-        var options = control.data('selectBox-options');
+        var options = control.data('ultimateSelect-options');
         options.remove();
         control.remove();
         select
-            .removeClass('selectBox')
-            .removeData('selectBox-control')
-            .data('selectBox-control', null)
-            .removeData('selectBox-settings')
-            .data('selectBox-settings', null)
+            .removeClass('ultimateSelect')
+            .removeData('ultimateSelect-control')
+            .data('ultimateSelect-control', null)
+            .removeData('ultimateSelect-settings')
+            .data('ultimateSelect-settings', null)
             .show();
     };
 
     /**
      * Refreshes the option elements.
      */
-    SelectBox.prototype.refresh = function () {
+    UltimateSelect.prototype.refresh = function () {
         var select = $(this.selectElement)
-            , control = select.data('selectBox-control')
-            , type = control.hasClass('selectBox-dropdown') ? 'dropdown' : 'inline'
+            , control = select.data('ultimateSelect-control')
+            , type = control.hasClass('ultimateSelect-dropdown') ? 'dropdown' : 'inline'
             , options;
 
         // Remove old options
-        control.data('selectBox-options').remove();
+        control.data('ultimateSelect-options').remove();
 
         // Generate new options
         options  = this.getOptions(type);
-        control.data('selectBox-options', options);
+        control.data('ultimateSelect-options', options);
 
         switch (type) {
             case 'inline':
@@ -430,7 +430,7 @@
         }
 
         // Restore opened dropdown state (original menu was trashed)
-        if ('dropdown' === type && control.hasClass('selectBox-menuShowing')) {
+        if ('dropdown' === type && control.hasClass('ultimateSelect-menuShowing')) {
             this.showMenu();
         }
     };
@@ -438,23 +438,23 @@
     /**
      * Shows the dropdown menu.
      */
-    SelectBox.prototype.showMenu = function () {
+    UltimateSelect.prototype.showMenu = function () {
         var self = this
             , select   = $(this.selectElement)
-            , control  = select.data('selectBox-control')
-            , settings = select.data('selectBox-settings')
-            , options  = control.data('selectBox-options');
+            , control  = select.data('ultimateSelect-control')
+            , settings = select.data('ultimateSelect-settings')
+            , options  = control.data('ultimateSelect-options');
 
-        if (control.hasClass('selectBox-disabled')) {
+        if (control.hasClass('ultimateSelect-disabled')) {
             return false;
         }
 
         this.hideMenus();
-        
-        // Get top and bottom width of selectBox
+
+        // Get top and bottom width of ultimateSelect
         var borderBottomWidth = parseInt(control.css('borderBottomWidth')) || 0;
         var borderTopWidth = parseInt(control.css('borderTopWidth')) || 0;
-        
+
         // Get proper variables for keeping options in viewport
         var pos = control.offset()
             , topPositionCorrelation = (settings.topPositionCorrelation) ? settings.topPositionCorrelation : 0
@@ -468,12 +468,12 @@
             , posTop = (heightToTop > heightToBottom) && (settings.keepInViewport == null ? true : settings.keepInViewport)
             , top = posTop
                   ? pos.top - optionsHeight + borderTopWidth + topPositionCorrelation
-                  : pos.top + controlHeight - borderBottomWidth - bottomPositionCorrelation;        
-        
-        
+                  : pos.top + controlHeight - borderBottomWidth - bottomPositionCorrelation;
+
+
         // If the height to top and height to bottom are less than the max-height
         if(heightToTop < maxHeight&& heightToBottom < maxHeight){
-            
+
             // Set max-height and top
             if(posTop){
                 var maxHeightDiff = maxHeight - ( heightToTop - 5 );
@@ -483,13 +483,13 @@
                 var maxHeightDiff = maxHeight - ( heightToBottom - 5 );
                 options.css({'max-height': maxHeight - maxHeightDiff + 'px'});
             }
-            
+
         }
-        
+
         // Save if position is top to options data
         options.data('posTop',posTop);
-        
-        
+
+
         // Menu position
         options
             .width(control.innerWidth())
@@ -498,7 +498,7 @@
                 left: control.offset().left
             })
             // Add Top and Bottom class based on position
-            .addClass('selectBox-options selectBox-options-'+(posTop?'top':'bottom'));
+            .addClass('ultimateSelect-options ultimateSelect-options-'+(posTop?'top':'bottom'));
 
 
         if (select.triggerHandler('beforeopen')) {
@@ -507,7 +507,7 @@
 
         var dispatchOpenEvent = function () {
             select.triggerHandler('open', {
-                _selectBox: true
+                _ultimateSelect: true
             });
         };
 
@@ -529,14 +529,14 @@
         }
 
         // Center on selected option
-        var li = options.find('.selectBox-selected:first');
+        var li = options.find('.ultimateSelect-selected:first');
         this.keepOptionInView(li, true);
         this.addHover(li);
-        control.addClass('selectBox-menuShowing selectBox-menuShowing-'+(posTop?'top':'bottom'));
+        control.addClass('ultimateSelect-menuShowing ultimateSelect-menuShowing-'+(posTop?'top':'bottom'));
 
-        $(document).bind('mousedown.selectBox', function (event) {
+        $(document).bind('mousedown.ultimateSelect', function (event) {
             if (1 === event.which) {
-                if ($(event.target).parents().andSelf().hasClass('selectBox-options')) {
+                if ($(event.target).parents().andSelf().hasClass('ultimateSelect-options')) {
                     return;
                 }
                 self.hideMenus();
@@ -547,17 +547,17 @@
     /**
      * Hides the menu of all instances.
      */
-    SelectBox.prototype.hideMenus = function () {
-        if ($(".selectBox-dropdown-menu:visible").length === 0) {
+    UltimateSelect.prototype.hideMenus = function () {
+        if ($(".ultimateSelect-dropdown-menu:visible").length === 0) {
             return;
         }
 
-        $(document).unbind('mousedown.selectBox');
-        $(".selectBox-dropdown-menu").each(function () {
+        $(document).unbind('mousedown.ultimateSelect');
+        $(".ultimateSelect-dropdown-menu").each(function () {
             var options = $(this)
-                , select = options.data('selectBox-select')
-                , control = select.data('selectBox-control')
-                , settings = select.data('selectBox-settings')
+                , select = options.data('ultimateSelect-select')
+                , control = select.data('ultimateSelect-control')
+                , settings = select.data('ultimateSelect-settings')
                 , posTop = options.data('posTop');
 
             if (select.triggerHandler('beforeclose')) {
@@ -566,7 +566,7 @@
 
             var dispatchCloseEvent = function () {
                 select.triggerHandler('close', {
-                    _selectBox: true
+                    _ultimateSelect: true
                 });
             };
             if (settings) {
@@ -584,18 +584,18 @@
                 if (!settings.menuSpeed) {
                     dispatchCloseEvent();
                 }
-                control.removeClass('selectBox-menuShowing selectBox-menuShowing-'+(posTop?'top':'bottom'));
+                control.removeClass('ultimateSelect-menuShowing ultimateSelect-menuShowing-'+(posTop?'top':'bottom'));
             } else {
                 $(this).hide();
                 $(this).triggerHandler('close', {
-                    _selectBox: true
+                    _ultimateSelect: true
                 });
-                $(this).removeClass('selectBox-menuShowing selectBox-menuShowing-'+(posTop?'top':'bottom'));
+                $(this).removeClass('ultimateSelect-menuShowing ultimateSelect-menuShowing-'+(posTop?'top':'bottom'));
             }
-            
+
             options.css('max-height','');
             //Remove Top or Bottom class based on position
-            options.removeClass('selectBox-options-'+(posTop?'top':'bottom'));
+            options.removeClass('ultimateSelect-options-'+(posTop?'top':'bottom'));
             options.data('posTop' , false);
         });
     };
@@ -607,60 +607,60 @@
      * @param {DOMEvent}    event
      * @returns {Boolean}
      */
-    SelectBox.prototype.selectOption = function (li, event) {
+    UltimateSelect.prototype.selectOption = function (li, event) {
         var select = $(this.selectElement);
         li         = $(li);
 
-        var control    = select.data('selectBox-control')
-            , settings = select.data('selectBox-settings');
+        var control    = select.data('ultimateSelect-control')
+            , settings = select.data('ultimateSelect-settings');
 
-        if (control.hasClass('selectBox-disabled')) {
+        if (control.hasClass('ultimateSelect-disabled')) {
             return false;
         }
 
-        if (0 === li.length || li.hasClass('selectBox-disabled')) {
+        if (0 === li.length || li.hasClass('ultimateSelect-disabled')) {
             return false;
         }
 
         if (select.attr('multiple')) {
             // If event.shiftKey is true, this will select all options between li and the last li selected
-            if (event.shiftKey && control.data('selectBox-last-selected')) {
-                li.toggleClass('selectBox-selected');
+            if (event.shiftKey && control.data('ultimateSelect-last-selected')) {
+                li.toggleClass('ultimateSelect-selected');
                 var affectedOptions;
-                if (li.index() > control.data('selectBox-last-selected').index()) {
+                if (li.index() > control.data('ultimateSelect-last-selected').index()) {
                     affectedOptions = li
                         .siblings()
-                        .slice(control.data('selectBox-last-selected').index(), li.index());
+                        .slice(control.data('ultimateSelect-last-selected').index(), li.index());
                 } else {
                     affectedOptions = li
                         .siblings()
-                        .slice(li.index(), control.data('selectBox-last-selected').index());
+                        .slice(li.index(), control.data('ultimateSelect-last-selected').index());
                 }
-                affectedOptions = affectedOptions.not('.selectBox-optgroup, .selectBox-disabled');
-                if (li.hasClass('selectBox-selected')) {
-                    affectedOptions.addClass('selectBox-selected');
+                affectedOptions = affectedOptions.not('.ultimateSelect-optgroup, .ultimateSelect-disabled');
+                if (li.hasClass('ultimateSelect-selected')) {
+                    affectedOptions.addClass('ultimateSelect-selected');
                 } else {
-                    affectedOptions.removeClass('selectBox-selected');
+                    affectedOptions.removeClass('ultimateSelect-selected');
                 }
             } else if ((this.isMac && event.metaKey) || (!this.isMac && event.ctrlKey)) {
-                li.toggleClass('selectBox-selected');
+                li.toggleClass('ultimateSelect-selected');
             } else {
-                li.siblings().removeClass('selectBox-selected');
-                li.addClass('selectBox-selected');
+                li.siblings().removeClass('ultimateSelect-selected');
+                li.addClass('ultimateSelect-selected');
             }
         } else {
-            li.siblings().removeClass('selectBox-selected');
-            li.addClass('selectBox-selected');
+            li.siblings().removeClass('ultimateSelect-selected');
+            li.addClass('ultimateSelect-selected');
         }
 
-        if (control.hasClass('selectBox-dropdown')) {
-            control.find('.selectBox-label').text(li.text());
+        if (control.hasClass('ultimateSelect-dropdown')) {
+            control.find('.ultimateSelect-label').text(li.text());
         }
 
         // Update original control's value
         var i = 0, selection = [];
         if (select.attr('multiple')) {
-            control.find('.selectBox-selected A').each(function () {
+            control.find('.ultimateSelect-selected A').each(function () {
                 selection[i++] = $(this).attr('rel');
             });
         } else {
@@ -668,7 +668,7 @@
         }
 
         // Remember most recently selected item
-        control.data('selectBox-last-selected', li);
+        control.data('ultimateSelect-last-selected', li);
 
         // Change callback
         if (select.val() !== selection) {
@@ -685,14 +685,14 @@
      *
      * @param {HTMLElement} li
      */
-    SelectBox.prototype.addHover = function (li) {
+    UltimateSelect.prototype.addHover = function (li) {
         li = $(li);
         var select = $(this.selectElement)
-            , control   = select.data('selectBox-control')
-            , options = control.data('selectBox-options');
+            , control   = select.data('ultimateSelect-control')
+            , options = control.data('ultimateSelect-options');
 
-        options.find('.selectBox-hover').removeClass('selectBox-hover');
-        li.addClass('selectBox-hover');
+        options.find('.ultimateSelect-hover').removeClass('ultimateSelect-hover');
+        li.addClass('ultimateSelect-hover');
     };
 
     /**
@@ -700,7 +700,7 @@
      *
      * @returns {HTMLElement}
      */
-    SelectBox.prototype.getSelectElement = function () {
+    UltimateSelect.prototype.getSelectElement = function () {
         return this.selectElement;
     };
 
@@ -709,13 +709,13 @@
      *
      * @param {HTMLElement} li
      */
-    SelectBox.prototype.removeHover = function (li) {
+    UltimateSelect.prototype.removeHover = function (li) {
         li = $(li);
         var select = $(this.selectElement)
-            , control = select.data('selectBox-control')
-            , options = control.data('selectBox-options');
+            , control = select.data('ultimateSelect-control')
+            , options = control.data('ultimateSelect-options');
 
-        options.find('.selectBox-hover').removeClass('selectBox-hover');
+        options.find('.ultimateSelect-hover').removeClass('ultimateSelect-hover');
     };
 
     /**
@@ -724,15 +724,15 @@
      * @param {jQuery}      li
      * @param {Boolean}     center
      */
-    SelectBox.prototype.keepOptionInView = function (li, center) {
+    UltimateSelect.prototype.keepOptionInView = function (li, center) {
         if (!li || li.length === 0) {
             return;
         }
 
         var select = $(this.selectElement)
-            , control     = select.data('selectBox-control')
-            , options   = control.data('selectBox-options')
-            , scrollBox = control.hasClass('selectBox-dropdown') ? options : options.parent()
+            , control     = select.data('ultimateSelect-control')
+            , options   = control.data('ultimateSelect-options')
+            , scrollBox = control.hasClass('ultimateSelect-dropdown') ? options : options.parent()
             , top       = parseInt(li.offset().top -scrollBox.position().top)
             , bottom    = parseInt(top + li.outerHeight());
 
@@ -756,14 +756,14 @@
      *
      * @param {DOMEvent}    event
      */
-    SelectBox.prototype.handleKeyDown = function (event) {
+    UltimateSelect.prototype.handleKeyDown = function (event) {
         var select = $(this.selectElement)
-            , control        = select.data('selectBox-control')
-            , options      = control.data('selectBox-options')
-            , settings     = select.data('selectBox-settings')
+            , control        = select.data('ultimateSelect-control')
+            , options      = control.data('ultimateSelect-options')
+            , settings     = select.data('ultimateSelect-settings')
             , totalOptions = 0, i = 0;
 
-        if (control.hasClass('selectBox-disabled')) {
+        if (control.hasClass('ultimateSelect-disabled')) {
             return;
         }
 
@@ -782,9 +782,9 @@
                 break;
             case 13:
                 // enter
-                if (control.hasClass('selectBox-menuShowing')) {
-                    this.selectOption(options.find('LI.selectBox-hover:first'), event);
-                    if (control.hasClass('selectBox-dropdown')) {
+                if (control.hasClass('ultimateSelect-menuShowing')) {
+                    this.selectOption(options.find('LI.ultimateSelect-hover:first'), event);
+                    if (control.hasClass('ultimateSelect-dropdown')) {
                         this.hideMenus();
                     }
                 } else {
@@ -796,12 +796,12 @@
             case 37:
                 // left
                 event.preventDefault();
-                if (control.hasClass('selectBox-menuShowing')) {
-                    var prev = options.find('.selectBox-hover').prev('LI');
-                    totalOptions = options.find('LI:not(.selectBox-optgroup)').length;
+                if (control.hasClass('ultimateSelect-menuShowing')) {
+                    var prev = options.find('.ultimateSelect-hover').prev('LI');
+                    totalOptions = options.find('LI:not(.ultimateSelect-optgroup)').length;
                     i = 0;
-                    while (prev.length === 0 || prev.hasClass('selectBox-disabled') ||
-                        prev.hasClass('selectBox-optgroup')) {
+                    while (prev.length === 0 || prev.hasClass('ultimateSelect-disabled') ||
+                        prev.hasClass('ultimateSelect-optgroup')) {
                         prev = prev.prev('LI');
                         if (prev.length === 0) {
                             if (settings.loopOptions) {
@@ -826,12 +826,12 @@
             case 39:
                 // right
                 event.preventDefault();
-                if (control.hasClass('selectBox-menuShowing')) {
-                    var next = options.find('.selectBox-hover').next('LI');
-                    totalOptions = options.find('LI:not(.selectBox-optgroup)').length;
+                if (control.hasClass('ultimateSelect-menuShowing')) {
+                    var next = options.find('.ultimateSelect-hover').next('LI');
+                    totalOptions = options.find('LI:not(.ultimateSelect-optgroup)').length;
                     i = 0;
-                    while (0 === next.length || next.hasClass('selectBox-disabled') ||
-                        next.hasClass('selectBox-optgroup')) {
+                    while (0 === next.length || next.hasClass('ultimateSelect-disabled') ||
+                        next.hasClass('ultimateSelect-optgroup')) {
                         next = next.next('LI');
                         if (next.length === 0) {
                             if (settings.loopOptions) {
@@ -860,13 +860,13 @@
      *
      * @param {DOMEvent}    event
      */
-    SelectBox.prototype.handleKeyPress = function (event) {
+    UltimateSelect.prototype.handleKeyPress = function (event) {
         var select = $(this.selectElement)
-            , control = select.data('selectBox-control')
-            , options = control.data('selectBox-options')
+            , control = select.data('ultimateSelect-control')
+            , options = control.data('ultimateSelect-options')
             , self    = this;
 
-        if (control.hasClass('selectBox-disabled')) {
+        if (control.hasClass('ultimateSelect-disabled')) {
             return;
         }
 
@@ -889,7 +889,7 @@
                 break;
             default:
                 // Type to find
-                if (!control.hasClass('selectBox-menuShowing')) {
+                if (!control.hasClass('ultimateSelect-menuShowing')) {
                     this.showMenu();
                 }
                 event.preventDefault();
@@ -912,29 +912,29 @@
     };
 
     /**
-     * Enables the selectBox.
+     * Enables the ultimateSelect.
      */
-    SelectBox.prototype.enable = function () {
+    UltimateSelect.prototype.enable = function () {
         var select = $(this.selectElement);
         select.prop('disabled', false);
-        var control = select.data('selectBox-control');
+        var control = select.data('ultimateSelect-control');
         if (!control) {
             return;
         }
-        control.removeClass('selectBox-disabled');
+        control.removeClass('ultimateSelect-disabled');
     };
 
     /**
-     * Disables the selectBox.
+     * Disables the ultimateSelect.
      */
-    SelectBox.prototype.disable = function () {
+    UltimateSelect.prototype.disable = function () {
         var select = $(this.selectElement);
         select.prop('disabled', true);
-        var control = select.data('selectBox-control');
+        var control = select.data('ultimateSelect-control');
         if (!control) {
             return;
         }
-        control.addClass('selectBox-disabled');
+        control.addClass('ultimateSelect-disabled');
     };
 
     /**
@@ -942,7 +942,7 @@
      *
      * @param {String}      value
      */
-    SelectBox.prototype.setValue = function (value) {
+    UltimateSelect.prototype.setValue = function (value) {
         var select = $(this.selectElement);
         select.val(value);
         value = select.val(); // IE9's select would be null if it was set with a non-exist options value
@@ -952,29 +952,29 @@
             select.val(value);
         }
 
-        var control = select.data('selectBox-control');
+        var control = select.data('ultimateSelect-control');
         if (!control) {
             return;
         }
 
-        var settings = select.data('selectBox-settings')
-            , options = control.data('selectBox-options');
+        var settings = select.data('ultimateSelect-settings')
+            , options = control.data('ultimateSelect-options');
 
         // Update label
         this.setLabel();
 
         // Update control values
-        options.find('.selectBox-selected').removeClass('selectBox-selected');
+        options.find('.ultimateSelect-selected').removeClass('ultimateSelect-selected');
         options.find('A').each(function () {
             if (typeof(value) === 'object') {
                 for (var i = 0; i < value.length; i++) {
                     if ($(this).attr('rel') == value[i]) {
-                        $(this).parent().addClass('selectBox-selected');
+                        $(this).parent().addClass('ultimateSelect-selected');
                     }
                 }
             } else {
                 if ($(this).attr('rel') == value) {
-                    $(this).parent().addClass('selectBox-selected');
+                    $(this).parent().addClass('ultimateSelect-selected');
                 }
             }
         });
@@ -989,9 +989,9 @@
      *
      * @param {String|Object} options
      */
-    SelectBox.prototype.setOptions = function (options) {
+    UltimateSelect.prototype.setOptions = function (options) {
         var select = $(this.selectElement)
-            , control = select.data('selectBox-control');
+            , control = select.data('ultimateSelect-control');
 
         switch (typeof(options)) {
             case 'string':
@@ -1028,7 +1028,7 @@
      *
      * @param {*} selector
      */
-    SelectBox.prototype.disableSelection = function (selector) {
+    UltimateSelect.prototype.disableSelection = function (selector) {
         $(selector).css('MozUserSelect', 'none').bind('selectstart', function (event) {
             event.preventDefault();
         });
@@ -1040,17 +1040,17 @@
      * @param {jQuery} self
      * @param {jQuery} options
      */
-    SelectBox.prototype.generateOptions = function (self, options) {
+    UltimateSelect.prototype.generateOptions = function (self, options) {
         var li = $('<li />'), a = $('<a />');
         li.addClass(self.attr('class'));
         li.data(self.data());
         a.attr('rel', self.val()).text(self.text());
         li.append(a);
         if (self.attr('disabled')) {
-            li.addClass('selectBox-disabled');
+            li.addClass('ultimateSelect-disabled');
         }
         if (self.attr('selected')) {
-            li.addClass('selectBox-selected');
+            li.addClass('ultimateSelect-selected');
         }
         options.append(li);
     };
@@ -1059,29 +1059,29 @@
      * Extends the jQuery.fn object.
      */
     $.extend($.fn, {
-        selectBox: function (method, options) {
-            var selectBox;
+        ultimateSelect: function (method, options) {
+            var ultimateSelect;
 
             switch (method) {
                 case 'control':
-                    return $(this).data('selectBox-control');
+                    return $(this).data('ultimateSelect-control');
                 case 'settings':
                     if (!options) {
-                        return $(this).data('selectBox-settings');
+                        return $(this).data('ultimateSelect-settings');
                     }
                     $(this).each(function () {
-                        $(this).data('selectBox-settings', $.extend(true, $(this).data('selectBox-settings'), options));
+                        $(this).data('ultimateSelect-settings', $.extend(true, $(this).data('ultimateSelect-settings'), options));
                     });
                     break;
                 case 'options':
                     // Getter
                     if (undefined === options) {
-                        return $(this).data('selectBox-control').data('selectBox-options');
+                        return $(this).data('ultimateSelect-control').data('ultimateSelect-options');
                     }
                     // Setter
                     $(this).each(function () {
-                        if (selectBox = $(this).data('selectBox')) {
-                            selectBox.setOptions(options);
+                        if (ultimateSelect = $(this).data('ultimateSelect')) {
+                            ultimateSelect.setOptions(options);
                         }
                     });
                     break;
@@ -1091,46 +1091,46 @@
                         return $(this).val();
                     }
                     $(this).each(function () {
-                        if (selectBox = $(this).data('selectBox')) {
-                            selectBox.setValue(options);
+                        if (ultimateSelect = $(this).data('ultimateSelect')) {
+                            ultimateSelect.setValue(options);
                         }
                     });
                     break;
                 case 'refresh':
                     $(this).each(function () {
-                        if (selectBox = $(this).data('selectBox')) {
-                            selectBox.refresh();
+                        if (ultimateSelect = $(this).data('ultimateSelect')) {
+                            ultimateSelect.refresh();
                         }
                     });
                     break;
                 case 'enable':
                     $(this).each(function () {
-                        if (selectBox = $(this).data('selectBox')) {
-                            selectBox.enable(this);
+                        if (ultimateSelect = $(this).data('ultimateSelect')) {
+                            ultimateSelect.enable(this);
                         }
                     });
                     break;
                 case 'disable':
                     $(this).each(function () {
-                        if (selectBox = $(this).data('selectBox')) {
-                            selectBox.disable();
+                        if (ultimateSelect = $(this).data('ultimateSelect')) {
+                            ultimateSelect.disable();
                         }
                     });
                     break;
                 case 'destroy':
                     $(this).each(function () {
-                        if (selectBox = $(this).data('selectBox')) {
-                            selectBox.destroy();
-                            $(this).data('selectBox', null);
+                        if (ultimateSelect = $(this).data('ultimateSelect')) {
+                            ultimateSelect.destroy();
+                            $(this).data('ultimateSelect', null);
                         }
                     });
                     break;
                 case 'instance':
-                    return $(this).data('selectBox');
+                    return $(this).data('ultimateSelect');
                 default:
                     $(this).each(function (idx, select) {
-                        if (!$(select).data('selectBox')) {
-                            $(select).data('selectBox', new SelectBox(select, method));
+                        if (!$(select).data('ultimateSelect')) {
+                            $(select).data('ultimateSelect', new UltimateSelect(select, method));
                         }
                     });
                     break;

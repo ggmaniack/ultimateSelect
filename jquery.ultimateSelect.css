@@ -1,5 +1,5 @@
 /* Dropdown control */
-.selectBox-dropdown {
+.ultimateSelect-dropdown {
     min-width: 150px;
     position: relative;
     border: solid 1px #BBB;
@@ -23,12 +23,12 @@
     cursor: default;
 }
 
-.selectBox-dropdown:focus,
-.selectBox-dropdown:focus .selectBox-arrow {
+.ultimateSelect-dropdown:focus,
+.ultimateSelect-dropdown:focus .ultimateSelect-arrow {
     border-color: #666;
 }
 
-.selectBox-dropdown.selectBox-menuShowing-bottom {
+.ultimateSelect-dropdown.ultimateSelect-menuShowing-bottom {
     -moz-border-radius-bottomleft: 0;
     -moz-border-radius-bottomright: 0;
     -webkit-border-bottom-left-radius: 0;
@@ -37,7 +37,7 @@
     border-bottom-right-radius: 0;
 }
 
-.selectBox-dropdown.selectBox-menuShowing-top {
+.ultimateSelect-dropdown.ultimateSelect-menuShowing-top {
     -moz-border-radius-topleft: 0;
     -moz-border-radius-topright: 0;
     -webkit-border-top-left-radius: 0;
@@ -46,30 +46,29 @@
     border-top-right-radius: 0;
 }
 
-.selectBox-dropdown .selectBox-label {
+.ultimateSelect-dropdown .ultimateSelect-label {
     padding: 2px 8px;
     display: inline-block;
     white-space: nowrap;
     overflow: hidden;
 }
 
-.selectBox-dropdown .selectBox-arrow {
+.ultimateSelect-dropdown .ultimateSelect-arrow {
     position: absolute;
     top: 0;
     right: 0;
     width: 23px;
     height: 100%;
-    background: url(jquery.selectBox-arrow.gif) 50% center no-repeat;
     border-left: solid 1px #BBB;
 }
 
 /* Dropdown menu */
-.selectBox-dropdown-menu {
+.ultimateSelect-dropdown-menu {
     position: absolute;
     z-index: 99999;
     max-height: 200px;
     min-height: 1em;
-    border: solid 1px #BBB; /* should be the same border width as .selectBox-dropdown */
+    border: solid 1px #BBB; /* should be the same border width as .ultimateSelect-dropdown */
     background: #FFF;
     -moz-box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
     -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
@@ -79,7 +78,7 @@
 }
 
 /* Inline control */
-.selectBox-inline {
+.ultimateSelect-inline {
     min-width: 150px;
     outline: none;
     border: solid 1px #BBB;
@@ -91,14 +90,14 @@
     overflow: auto;
 }
 
-.selectBox-inline:focus {
+.ultimateSelect-inline:focus {
     border-color: #666;
 }
 
 /* Options */
-.selectBox-options,
-.selectBox-options LI,
-.selectBox-options LI A {
+.ultimateSelect-options,
+.ultimateSelect-options LI,
+.ultimateSelect-options LI A {
     list-style: none;
     display: block;
     cursor: default;
@@ -106,7 +105,7 @@
     margin: 0;
 }
 
-.selectBox-options.selectBox-options-top{
+.ultimateSelect-options.ultimateSelect-options-top{
     border-bottom:none;
 	margin-top:1px;
 	-moz-border-radius-topleft: 5px;
@@ -116,7 +115,7 @@
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
-.selectBox-options.selectBox-options-bottom{
+.ultimateSelect-options.ultimateSelect-options-bottom{
 	border-top:none;
     -moz-border-radius-bottomleft: 5px;
     -moz-border-radius-bottomright: 5px;
@@ -126,7 +125,7 @@
     border-bottom-right-radius: 5px;
 }
 
-.selectBox-options LI A {
+.ultimateSelect-options LI A {
     line-height: 1.5;
     padding: 0 .5em;
     white-space: nowrap;
@@ -134,20 +133,20 @@
     background: 6px center no-repeat;
 }
 
-.selectBox-options LI.selectBox-hover A {
+.ultimateSelect-options LI.ultimateSelect-hover A {
     background-color: #EEE;
 }
 
-.selectBox-options LI.selectBox-disabled A {
+.ultimateSelect-options LI.ultimateSelect-disabled A {
     color: #888;
     background-color: transparent;
 }
 
-.selectBox-options LI.selectBox-selected A {
+.ultimateSelect-options LI.ultimateSelect-selected A {
     background-color: #C8DEF4;
 }
 
-.selectBox-options .selectBox-optgroup {
+.ultimateSelect-options .ultimateSelect-optgroup {
     color: #666;
     background: #EEE;
     font-weight: bold;
@@ -157,20 +156,20 @@
 }
 
 /* Disabled state */
-.selectBox.selectBox-disabled {
+.ultimateSelect.ultimateSelect-disabled {
     color: #888 !important;
 }
 
-.selectBox-dropdown.selectBox-disabled .selectBox-arrow {
+.ultimateSelect-dropdown.ultimateSelect-disabled .ultimateSelect-arrow {
     opacity: .5;
     filter: alpha(opacity=50);
     border-color: #666;
 }
 
-.selectBox-inline.selectBox-disabled {
+.ultimateSelect-inline.ultimateSelect-disabled {
     color: #888 !important;
 }
 
-.selectBox-inline.selectBox-disabled .selectBox-options A {
+.ultimateSelect-inline.ultimateSelect-disabled .ultimateSelect-options A {
     background-color: transparent !important;
 }

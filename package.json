@@ -1,14 +1,14 @@
 {
-  "name": "jquery.selectBox",
-  "title": "jquery SelectBox",
-  "description": "A styleable replacement for SELECT elements.",
-  "version": "v1.2.0",
-  "keywords": ["select", "jQuery select", "selectBox", "jQuery"],
-  "homepage": "https://github.com/marcj/jquery-selectBox",
+  "name": "jquery.ultimateSelect",
+  "title": "jquery ultimateSelect",
+  "description": "A style-able replacement for SELECT elements.",
+  "version": "v1.3.0",
+  "keywords": ["select", "jQuery select", "ultimateSelect", "jQuery"],
+  "homepage": "https://github.com/ionutvmi/ultimateSelect",
   "author": {
-    "name": "Marc J. Schmidt",
-    "email": "marc@kryn.org",
-    "url": "http://marcjschmidt.de"
+    "name": "Miahi Ionut Vilcu",
+    "email": "ionutvmi@gmail.com",
+    "url": "http://github.com/ionutvmi"
   },
   "licenses": [
     {
@@ -18,9 +18,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/marcj/jquery-selectBox.git"
+    "url": "git://github.com/ionutvmi/ultimateSelect.git"
   },
   "bugs": {
-    "url": "https://github.com/marcj/jquery-selectBox/issues"
+    "url": "https://github.com/ionutvmi/ultimateSelect/issues"
   }
 }

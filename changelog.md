@@ -1,6 +1,9 @@
 Changelog
 =========
 
+v1.3.0
+- Renamed the plugin to `ultimateSelect` (Mihai Ionut Vilcu)
+
 v1.2.0
 ------
 b7d1afd - Made sure we have a object as `settings`. Added small readme adjustments. [marcj]

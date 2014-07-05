@@ -1,12 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-    <title>jQuery selectBox (select replacement plugin)</title>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script type="text/javascript" src="jquery.selectBox.js"></script>
-    <link type="text/css" rel="stylesheet" href="jquery.selectBox.css"/>
+    <title>jQuery ultimateSelect (select replacement plugin)</title>
+
+    <link type="text/css" rel="stylesheet" href="jquery.ultimateSelect.css"/>
 
     <style type="text/css">
+        body {
+            font-family: Arial, Helvetica, sans-serif; font-size: 14px;
+        }
         #console {
             width: 50%;
             font-family: 'Courier New', monospace;
@@ -20,125 +22,9 @@
         }
     </style>
 
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-
-            //
-            // Enable selectBox control and bind events
-            //
-
-            $('#create').click(function () {
-                $('SELECT').selectBox();
-            });
-
-            $('#destroy').click(function () {
-                $('SELECT').selectBox('destroy');
-            });
-
-            $('#enable').click(function () {
-                $('SELECT').selectBox('enable');
-            });
-
-            $('#disable').click(function () {
-                $('SELECT').selectBox('disable');
-            });
-
-            $('#serialize').click(function () {
-                $('#console').append('<br />-- Serialized data --<br />' +
-                        $('FORM').serialize().replace(/&/g, '<br />') + '<br /><br />');
-                $('#console')[0].scrollTop = $('#console')[0].scrollHeight;
-            });
-
-            $('#refresh').click(function() {
-                $('SELECT OPTION').each(function() {
-                    $(this).text('Refreshed ' + $(this).val());
-                });
-                $('SELECT').selectBox('refresh');
-            });
-
-            $('#value-1').click(function () {
-                $('SELECT').selectBox('value', 1);
-            });
-
-            $('#value-2').click(function () {
-                $('SELECT').selectBox('value', 2);
-            });
-
-            $('#value-2-4').click(function () {
-                $('SELECT').selectBox('value', [2, 4]);
-            });
-
-            $('#options').click(function () {
-                $('SELECT').selectBox('options', {
-                    'Opt Group 1': {
-                        '1': 'Value 1',
-                        '2': 'Value 2',
-                        '3': 'Value 3',
-                        '4': 'Value 4',
-                        '5': 'Value 5'
-                    },
-                    'Opt Group 2': {
-                        '6': 'Value 6',
-                        '7': 'Value 7',
-                        '8': 'Value 8',
-                        '9': 'Value 9',
-                        '10': 'Value 10'
-                    },
-                    'Opt Group 3': {
-                        '11': 'Value 11',
-                        '12': 'Value 12',
-                        '13': 'Value 13',
-                        '14': 'Value 14',
-                        '15': 'Value 15'
-                    }
-                });
-            });
-
-            $('#default').click(function () {
-                $('SELECT').selectBox('settings', {
-                    'menuTransition': 'default',
-                    'menuSpeed': 0
-                });
-            });
-
-            $('#fade').click(function () {
-                $('SELECT').selectBox('settings', {
-                    'menuTransition': 'fade',
-                    'menuSpeed': 'fast'
-                });
-            });
-
-            $('#slide').click(function () {
-                $('SELECT').selectBox('settings', {
-                    'menuTransition': 'slide',
-                    'menuSpeed': 'fast'
-                });
-            });
-
-            $('select')
-                    .selectBox({
-                        mobile: true
-                    })
-                    .focus(function () {
-                        $('#console').append('Focus on ' + $(this).attr('name') + '<br />');
-                        $('#console')[0].scrollTop = $('#console')[0].scrollHeight;
-                    })
-                    .blur(function () {
-                        $('#console').append('Blur on ' + $(this).attr('name') + '<br />');
-                        $('#console')[0].scrollTop = $('#console')[0].scrollHeight;
-                    })
-                    .change(function () {
-                        $('#console').append('Change on ' + $(this).attr('name') + ': ' + $(this).val() + '<br />');
-                        $('#console')[0].scrollTop = $('#console')[0].scrollHeight;
-                    });
-
-        });
-
-    </script>
 
 </head>
-<body style="font-family: Arial, Helvetica, sans-serif; font-size: 14px;">
+<body>
 <form style="background: #FFF; padding: 20px; border: solid 2px #DDD;">
     <div id="console"></div>
 
@@ -146,12 +32,12 @@
         <p><strong>Note</strong></p>
 
         <p>
-            Refer to <a href="jquery.selectBox.js">jquery.selectBox.js</a>
+            Refer to <a href="jquery.ultimateSelect.js">jquery.ultimateSelect.js</a>
             for usage, known issues, change log, and more info.
         </p>
     </div>
 
-    <h1>$('select').selectBox();</h1>
+    <h1>$('select').ultimateSelect();</h1>
 
     <p>
         <label for="standard-dropdown">Standard Dropdown</label><br/>
@@ -364,5 +250,125 @@
 
     <div style="clear: both;"></div>
 </form>
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.ultimateSelect.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            //
+            // Enable ultimateSelect control and bind events
+            //
+
+            $('#create').click(function () {
+                $('SELECT').ultimateSelect();
+            });
+
+            $('#destroy').click(function () {
+                $('SELECT').ultimateSelect('destroy');
+            });
+
+            $('#enable').click(function () {
+                $('SELECT').ultimateSelect('enable');
+            });
+
+            $('#disable').click(function () {
+                $('SELECT').ultimateSelect('disable');
+            });
+
+            $('#serialize').click(function () {
+                $('#console').append('<br />-- Serialized data --<br />' +
+                        $('FORM').serialize().replace(/&/g, '<br />') + '<br /><br />');
+                $('#console')[0].scrollTop = $('#console')[0].scrollHeight;
+            });
+
+            $('#refresh').click(function() {
+                $('SELECT OPTION').each(function() {
+                    $(this).text('Refreshed ' + $(this).val());
+                });
+                $('SELECT').ultimateSelect('refresh');
+            });
+
+            $('#value-1').click(function () {
+                $('SELECT').ultimateSelect('value', 1);
+            });
+
+            $('#value-2').click(function () {
+                $('SELECT').ultimateSelect('value', 2);
+            });
+
+            $('#value-2-4').click(function () {
+                $('SELECT').ultimateSelect('value', [2, 4]);
+            });
+
+            $('#options').click(function () {
+                $('SELECT').ultimateSelect('options', {
+                    'Opt Group 1': {
+                        '1': 'Value 1',
+                        '2': 'Value 2',
+                        '3': 'Value 3',
+                        '4': 'Value 4',
+                        '5': 'Value 5'
+                    },
+                    'Opt Group 2': {
+                        '6': 'Value 6',
+                        '7': 'Value 7',
+                        '8': 'Value 8',
+                        '9': 'Value 9',
+                        '10': 'Value 10'
+                    },
+                    'Opt Group 3': {
+                        '11': 'Value 11',
+                        '12': 'Value 12',
+                        '13': 'Value 13',
+                        '14': 'Value 14',
+                        '15': 'Value 15'
+                    }
+                });
+            });
+
+            $('#default').click(function () {
+                $('SELECT').ultimateSelect('settings', {
+                    'menuTransition': 'default',
+                    'menuSpeed': 0
+                });
+            });
+
+            $('#fade').click(function () {
+                $('SELECT').ultimateSelect('settings', {
+                    'menuTransition': 'fade',
+                    'menuSpeed': 'fast'
+                });
+            });
+
+            $('#slide').click(function () {
+                $('SELECT').ultimateSelect('settings', {
+                    'menuTransition': 'slide',
+                    'menuSpeed': 'fast'
+                });
+            });
+
+            $('select')
+                    .ultimateSelect({
+                        mobile: true
+                    })
+                    .focus(function () {
+                        $('#console').append('Focus on ' + $(this).attr('name') + '<br />');
+                        $('#console')[0].scrollTop = $('#console')[0].scrollHeight;
+                    })
+                    .blur(function () {
+                        $('#console').append('Blur on ' + $(this).attr('name') + '<br />');
+                        $('#console')[0].scrollTop = $('#console')[0].scrollHeight;
+                    })
+                    .change(function () {
+                        $('#console').append('Change on ' + $(this).attr('name') + ': ' + $(this).val() + '<br />');
+                        $('#console')[0].scrollTop = $('#console')[0].scrollHeight;
+                    });
+
+        });
+
+    </script>
+
 </body>
 </html>

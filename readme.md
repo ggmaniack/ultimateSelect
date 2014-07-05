@@ -1,6 +1,6 @@
-# jQuery selectBox: A styleable replacement for SELECT elements
+# UltimateSelect 
 
-_Licensed under the MIT license: http://opensource.org/licenses/MIT_
+A modern style-able replacement for SELECT elements.
 
 ## Features
 
@@ -12,33 +12,33 @@ _Licensed under the MIT license: http://opensource.org/licenses/MIT_
 * Shift + click (or shift + enter) to select a range of options in multi-select controls
 * Type to search when the control has focus
 * Auto-height based on the size attribute (to use, omit the height property in your CSS!)
-* Tested in IE7-IE9, Firefox 3-4, recent WebKit browsers, and Opera
-
+* Tested in IE8+, Firefox, recent WebKit browsers
+* Mobile friendly (new)
 
 ## Usage
 
-Download the latest version: https://github.com/marcj/jquery-selectBox/releases
+Download the [latest version](https://github.com/ionutvmi/ultimateSelect/releases)
 
 Link to the JS file:
 
 ```html
-<script src="jquery.selectbox.js" type="text/javascript"></script>
+<script src="jquery.ultimateSelect.js" type="text/javascript"></script>
 ```
 
 Add the CSS file (or append contents to your own stylesheet):
 
 ```html
-<link href="jquery.selectbox.css" rel="stylesheet" type="text/css" />
+<link href="jquery.ultimateSelect.css" rel="stylesheet" type="text/css" />
 ```
 
 To initialize:
 
 ```javascript
 // default
-$('select').selectBox();
+$('select').ultimateSelect();
 
 // or with custom settings
-$('select').selectBox({
+$('select').ultimateSelect({
     mobile: true,
     menuSpeed: 'fast'
 });
@@ -61,7 +61,7 @@ $('select').selectBox({
 To specify settings after the init, use this syntax:
 
 ```javascript
-$('select').selectBox('settings', {settingName: value, ... });
+$('select').ultimateSelect('settings', {settingName: value, ... });
 ```
 
 ## Methods
@@ -69,7 +69,7 @@ $('select').selectBox('settings', {settingName: value, ... });
 To call a method use this syntax:
 
 ```javascript
-$('select').selectBox('methodName', [option]);
+$('select').ultimateSelect('methodName', [option]);
 ```
 
 ### Available methods
@@ -78,23 +78,23 @@ $('select').selectBox('methodName', [option]);
 | Key            | Description                                                                                   |
 | ---------------|-----------------------------------------------------------------------------------------------|
 | create         | Creates the control (default)                                                                 |
-| destroy        | Destroys the selectBox control and reverts back to the original form control                  |
+| destroy        | Destroys the UltimateSelect control and reverts back to the original form control                  |
 | disable        | Disables the control (i.e. disabled="disabled")                                               |
 | enable         | Enables the control                                                                           |
 | value          | If passed with a value, sets the control to that value; otherwise returns the current value   |
 | options        | If passed either a string of HTML or a JSON object, replaces the existing options; otherwise Returns the options container element as a jQuery object |
-| control        | Returns the selectBox control element (an anchor tag) for working with directly               |
-| refresh        | Updates the selectBox control's options based on the original controls options                |
-| instance       | Returns the SelectBox instance, where you have more methods available (only in v1.2.0-dev     |
-                 | available) as in the `SelectBox` class below.                                                 |
+| control        | Returns the UltimateSelect control element (an anchor tag) for working with directly               |
+| refresh        | Updates the UltimateSelect control's options based on the original controls options                |
+| instance       | Returns the UltimateSelect instance, where you have more methods available (only in v1.2.0-dev     |
+                 | available) as in the `UltimateSelect` class below.                                                 |
 
-## API `SelectBox`
+## API `UltimateSelect`
 
-You can instantiate the selectBox also through a classic OOP way:
+You can instantiate the UltimateSelect also through a classic OOP way:
 
 ```javascript
-var selectBox = new SelectBox($('#mySelectBox'), settings = {});
-selectBox.showMenu();
+var ultimateSelect = new UltimateSelect($('#mySelect'), settings = {});
+ultimateSelect.showMenu();
 ```
 
 The public methods are:
@@ -136,7 +136,7 @@ selectOption(HTMLElement li, event)
 Events are fired on the original select element. You can bind events like this:
 
 ```javascript
-$('select').selectBox().change(function () {
+$('select').ultimateSelect().change(function () {
     alert($(this).val());
 });
 ```
@@ -153,12 +153,12 @@ $('select').selectBox().change(function () {
 | beforeclose    | Fired before a dropdown menu closes (cancelable)                                              |
 | close          | Fired after a dropdown menu closes (not cancelable)                                           |
 
-### Known Issues
 
-* The blur and focus callbacks are not very reliable in IE7. The change callback works fine.
+## Maintained
+This fork is maintained by [Mihai Ionut Vilcu](http://github.com/ionutvmi)
+
 
 ## Credits
+This is a fork after [marcj/jquery-selectBox](https://github.com/marcj/jquery-selectBox)
 
-Original plugin by Cory LaViska of A Beautiful Site, LLC. (http://www.abeautifulsite.net/)
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/marcj/jquery-selectbox/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
