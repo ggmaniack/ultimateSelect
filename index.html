@@ -1,61 +1,43 @@
 <!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=640" />
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="ultimateSelect : A jQuery plugin for replacing &lt;select&gt; elements." />
 
-    <link rel="stylesheet" href="stylesheets/core.css" media="screen"/>
-    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
-    <link rel="stylesheet" href="jquery.selectBox.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <script type="text/javascript" src="javascripts/modernizr.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
-    <script type="text/javascript" src="jquery.selectBox.min.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function () {
-        $('#main_content').headsmart();
-        $('select').selectBox({
-          mobile: true
-        })
-      })
-    </script>
-    <title>jquery-selectbox by marcj</title>
+    <title>ultimateSelect</title>
   </head>
 
   <body>
-    <a id="forkme_banner" href="https://github.com/marcj/jquery-selectBox">View on GitHub</a>
-    <div class="shell">
 
-      <header>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <h1>jquery-selectbox</h1>
-            <h2>A jQuery plugin for replacing &lt;select&gt; elements.</h2>
-          </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-      </header>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/ionutvmi/ultimateSelect">View on GitHub</a>
 
-      <section id="downloads">
-        <span class="inner">
-          <a href="https://github.com/marcj/jquery-selectBox/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/marcj/jquery-selectBox/tarball/master" class="tgz"><em>download</em> .TGZ</a>
-        </span>
-      </section>
+          <h1 id="project_title">ultimateSelect</h1>
+          <h2 id="project_tagline">A jQuery plugin for replacing &lt;select&gt; elements.</h2>
 
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/ionutvmi/ultimateSelect/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/ionutvmi/ultimateSelect/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
 
-      <span class="banner-fix"></span>
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="ultimateselect" class="anchor" href="#ultimateselect"><span class="octicon octicon-link"></span></a>UltimateSelect</h1>
 
+<p>A modern style-able replacement for SELECT elements.</p>
 
-      <section id="main_content">
-        <h1>jQuery selectBox: A styleable replacement for SELECT elements</h1>
-
-<p><em>Licensed under the MIT license: <a href="http://opensource.org/licenses/MIT">http://opensource.org/licenses/MIT</a></em></p>
-
-<h2>Features</h2>
+<h2>
+<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h2>
 
 <ul>
 <li>Supports OPTGROUPS</li>
@@ -66,125 +48,46 @@
 <li>Shift + click (or shift + enter) to select a range of options in multi-select controls</li>
 <li>Type to search when the control has focus</li>
 <li>Auto-height based on the size attribute (to use, omit the height property in your CSS!)</li>
-<li>Tested in IE7-IE9, Firefox 3-4, recent WebKit browsers, and Opera</li>
-</ul>
+<li>Tested in IE8+, Firefox, recent WebKit browsers</li>
+<li>Mobile friendly (new)</li>
+</ul><h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
 
-<h2>Demo</h2>
-
-    <p>
-        <label for="standard-dropdown">Standard Dropdown</label><br/>
-        <select id="standard-dropdown" name="standard-dropdown" class="custom-class1 custom-class2" style="width: 200px;">
-            <option value="1" class="test-class-1">Item 1</option>
-            <option value="2" class="test-class-2" selected="selected">Item 2</option>
-            <option value="3" class="test-class-3">Item 3 has a really long label that will not interfere with the control's
-                width
-            </option>
-            <option value="4" class="test-class-4">Item 4</option>
-            <option value="5" disabled="disabled">Item 5 (disabled)</option>
-            <option value="6">Item 6</option>
-            <option value="7">Item 7</option>
-            <option value="8">Item 8</option>
-            <option value="9">Item 9</option>
-            <option value="10">Item 10</option>
-            <option value="11">Item 11</option>
-            <option value="12">Item 12</option>
-            <option value="13">Item 13</option>
-            <option value="14">Item 14</option>
-            <option value="15">Item 15</option>
-            <option value="16">Item 16</option>
-            <option value="17">Item 17</option>
-            <option value="18">Item 18</option>
-            <option value="19">Item 19</option>
-            <option value="20">Item 20</option>
-        </select>
-    </p>
-
-    <p>
-        <label for="multi-select-control">Multi-select Control</label><br/>
-        <select id="multi-select-control" name="multi-select-control" multiple="multiple">
-            <option value="1" selected="selected">Item 1</option>
-            <option value="2">Item 2</option>
-            <option value="3">Item 3</option>
-            <option value="4">Item 4</option>
-            <option value="5" disabled="disabled">Item 5 (disabled)</option>
-        </select>
-    </p>
-
-    <p>
-        Standard control with OPTGROUPS<br/>
-        <select name="standard-with-optgroups">
-            <optgroup label="Section 1">
-                <option value="1">Item 1</option>
-                <option value="2">Item 2</option>
-                <option value="3">Item 3</option>
-                <option value="4">Item 4</option>
-            </optgroup>
-            <optgroup label="Section 2">
-                <option value="5">Item 5</option>
-                <option value="6">Item 6</option>
-                <option value="7">Item 7</option>
-                <option value="8">Item 8</option>
-            </optgroup>
-            <optgroup label="Section 3">
-                <option value="9">Item 9</option>
-                <option value="10">Item 10</option>
-                <option value="11">Item 11</option>
-                <option value="12">Item 12</option>
-            </optgroup>
-            <optgroup label="Section 4">
-                <option value="13">Item 13</option>
-                <option value="14">Item 14</option>
-                <option value="15">Item 15</option>
-                <option value="16">Item 16</option>
-            </optgroup>
-            <optgroup label="Section 5">
-                <option value="17">Item 17</option>
-                <option value="18">Item 18</option>
-                <option value="19">Item 19</option>
-                <option value="20">Item 20</option>
-            </optgroup>
-            <optgroup label="Section 6">
-                <option value="21">Item 21</option>
-                <option value="22">Item 22</option>
-                <option value="23">Item 23</option>
-                <option value="24">Item 24</option>
-            </optgroup>
-        </select>
-    </p>
-
-<h2>Usage</h2>
+<p>Download the <a href="https://github.com/ionutvmi/ultimateSelect/releases">latest version</a></p>
 
 <p>Link to the JS file:</p>
 
-<div class="highlight"><pre><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"jquery.selectbox.min.js"</span> <span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<div class="highlight highlight-html"><pre><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"jquery.ultimateSelect.js"</span> <span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;&lt;/script&gt;</span>
 </pre></div>
 
 <p>Add the CSS file (or append contents to your own stylesheet):</p>
 
-<div class="highlight"><pre><span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">"jquery.selectbox.css"</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="nt">/&gt;</span>
+<div class="highlight highlight-html"><pre><span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">"jquery.ultimateSelect.css"</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="nt">/&gt;</span>
 </pre></div>
 
 <p>To initialize:</p>
 
-<div class="highlight"><pre><span class="c1">// default</span>
-<span class="nx">$</span><span class="p">(</span><span class="s1">'select'</span><span class="p">).</span><span class="nx">selectBox</span><span class="p">();</span>
+<div class="highlight highlight-javascript"><pre><span class="c1">// default</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">'select'</span><span class="p">).</span><span class="nx">ultimateSelect</span><span class="p">();</span>
 
 <span class="c1">// or with custom settings</span>
-<span class="nx">$</span><span class="p">(</span><span class="s1">'select'</span><span class="p">).</span><span class="nx">selectBox</span><span class="p">({</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">'select'</span><span class="p">).</span><span class="nx">ultimateSelect</span><span class="p">({</span>
     <span class="nx">mobile</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
     <span class="nx">menuSpeed</span><span class="o">:</span> <span class="s1">'fast'</span>
 <span class="p">});</span>
 </pre></div>
 
-<h2>Settings</h2>
+<h2>
+<a name="settings" class="anchor" href="#settings"><span class="octicon octicon-link"></span></a>Settings</h2>
 
 <table>
-<tr>
+<thead><tr>
 <th>Key</th>
 <th align="center">Default</th>
 <th align="right">Values</th>
 <th align="right">Description</th>
-</tr>
+</tr></thead>
+<tbody>
 <tr>
 <td>mobile</td>
 <td align="center"><code>false</code></td>
@@ -213,32 +116,60 @@
 <td align="right">Boolean</td>
 <td align="right">Flag to allow arrow keys to loop through options</td>
 </tr>
+<tr>
+<td>topPositionCorrelation</td>
+<td align="center"><code>0</code></td>
+<td align="right">Integer</td>
+<td align="right">Will be plused to top position if droplist will be show at the top</td>
+</tr>
+<tr>
+<td>bottomPositionCorrelation</td>
+<td align="center"><code>0</code></td>
+<td align="right">Integer</td>
+<td align="right">Will be substracted from top position if droplist will be shown at the bottom</td>
+</tr>
+<tr>
+<td>hideOnWindowScroll</td>
+<td align="center"><code>true</code></td>
+<td align="right">Boolean</td>
+<td align="right">If false then showed droplist will not hide itself on window scroll event</td>
+</tr>
+<tr>
+<td>keepInViewport</td>
+<td align="center"><code>true</code></td>
+<td align="right">Boolean</td>
+<td align="right">If set to false, the droplist will be always open towards the bottom</td>
+</tr>
+</tbody>
 </table><p>To specify settings after the init, use this syntax:</p>
 
-<div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">'select'</span><span class="p">).</span><span class="nx">selectBox</span><span class="p">(</span><span class="s1">'settings'</span><span class="p">,</span> <span class="p">{</span><span class="nx">settingName</span><span class="o">:</span> <span class="nx">value</span><span class="p">,</span> <span class="p">...</span> <span class="p">});</span>
+<div class="highlight highlight-javascript"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">'select'</span><span class="p">).</span><span class="nx">ultimateSelect</span><span class="p">(</span><span class="s1">'settings'</span><span class="p">,</span> <span class="p">{</span><span class="nx">settingName</span><span class="o">:</span> <span class="nx">value</span><span class="p">,</span> <span class="p">...</span> <span class="p">});</span>
 </pre></div>
 
-<h2>Methods</h2>
+<h2>
+<a name="methods" class="anchor" href="#methods"><span class="octicon octicon-link"></span></a>Methods</h2>
 
 <p>To call a method use this syntax:</p>
 
-<div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">'select'</span><span class="p">).</span><span class="nx">selectBox</span><span class="p">(</span><span class="s1">'methodName'</span><span class="p">,</span> <span class="p">[</span><span class="nx">option</span><span class="p">]);</span>
+<div class="highlight highlight-javascript"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">'select'</span><span class="p">).</span><span class="nx">ultimateSelect</span><span class="p">(</span><span class="s1">'methodName'</span><span class="p">,</span> <span class="p">[</span><span class="nx">option</span><span class="p">]);</span>
 </pre></div>
 
-<h3>Available methods</h3>
+<h3>
+<a name="available-methods" class="anchor" href="#available-methods"><span class="octicon octicon-link"></span></a>Available methods</h3>
 
 <table>
-<tr>
+<thead><tr>
 <th>Key</th>
 <th>Description</th>
-</tr>
+</tr></thead>
+<tbody>
 <tr>
 <td>create</td>
 <td>Creates the control (default)</td>
 </tr>
 <tr>
 <td>destroy</td>
-<td>Destroys the selectBox control and reverts back to the original form control</td>
+<td>Destroys the UltimateSelect control and reverts back to the original form control</td>
 </tr>
 <tr>
 <td>disable</td>
@@ -258,32 +189,34 @@
 </tr>
 <tr>
 <td>control</td>
-<td>Returns the selectBox control element (an anchor tag) for working with directly</td>
+<td>Returns the UltimateSelect control element (an anchor tag) for working with directly</td>
 </tr>
 <tr>
 <td>refresh</td>
-<td>Updates the selectBox control's options based on the original controls options</td>
+<td>Updates the UltimateSelect control's options based on the original controls options</td>
 </tr>
 <tr>
 <td>instance</td>
-<td>Returns the SelectBox instance, where you have more methods available (only in v1.2.0-dev</td>
+<td>Returns the UltimateSelect instance, where you have more methods available (only in v1.2.0-dev</td>
 </tr>
 <tr>
 <td></td>
-<td>available) as in the <code>SelectBox</code> class below.</td>
+<td>available) as in the <code>UltimateSelect</code> class below.</td>
 </tr>
-</table><h2>API <code>SelectBox</code>
+</tbody>
+</table><h2>
+<a name="api-ultimateselect" class="anchor" href="#api-ultimateselect"><span class="octicon octicon-link"></span></a>API <code>UltimateSelect</code>
 </h2>
 
-<p>You can instantiate the selectBox also through a classic OOP way:</p>
+<p>You can instantiate the UltimateSelect also through a classic OOP way:</p>
 
-<div class="highlight"><pre><span class="kd">var</span> <span class="nx">selectBox</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SelectBox</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">'#mySelectBox'</span><span class="p">)[,</span> <span class="nx">settings</span> <span class="o">=</span> <span class="p">{}]);</span>
-<span class="nx">selectBox</span><span class="p">.</span><span class="nx">showMenu</span><span class="p">();</span>
+<div class="highlight highlight-javascript"><pre><span class="kd">var</span> <span class="nx">ultimateSelect</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">UltimateSelect</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s1">'#mySelect'</span><span class="p">),</span> <span class="nx">settings</span> <span class="o">=</span> <span class="p">{});</span>
+<span class="nx">ultimateSelect</span><span class="p">.</span><span class="nx">showMenu</span><span class="p">();</span>
 </pre></div>
 
 <p>The public methods are:</p>
 
-<div class="highlight"><pre><span class="nx">refresh</span><span class="p">()</span>
+<div class="highlight highlight-javascript"><pre><span class="nx">refresh</span><span class="p">()</span>
 <span class="nx">destroy</span><span class="p">()</span>
 <span class="nx">disable</span><span class="p">()</span>
 <span class="nx">enable</span><span class="p">()</span>
@@ -291,14 +224,14 @@
 <span class="nx">getLabelClass</span><span class="p">()</span>
 <span class="nx">getLabelText</span><span class="p">()</span>
 <span class="nx">getSelectElement</span><span class="p">()</span>
-<span class="nx">getOptions</span><span class="p">(</span><span class="nx">type</span><span class="p">)</span>
+<span class="nx">getOptions</span><span class="p">(</span><span class="nb">String</span> <span class="nx">type</span> <span class="o">=</span> <span class="s1">'inline'</span><span class="o">|</span><span class="s1">'dropdown'</span><span class="p">)</span>
 
 <span class="nx">hideMenus</span><span class="p">()</span>
 <span class="nx">showMenu</span><span class="p">()</span>
 
 <span class="nx">setLabel</span><span class="p">()</span>
-<span class="nx">setOptions</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
-<span class="nx">setValue</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span>
+<span class="nx">setOptions</span><span class="p">(</span><span class="nb">Object</span> <span class="nx">options</span><span class="p">)</span>
+<span class="nx">setValue</span><span class="p">(</span><span class="nb">String</span> <span class="nx">value</span><span class="p">)</span>
 
 <span class="nx">removeHover</span><span class="p">(</span><span class="nx">HTMLElement</span> <span class="nx">li</span><span class="p">)</span>
 <span class="nx">addHover</span><span class="p">(</span><span class="nx">HTMLElement</span> <span class="nx">li</span><span class="p">)</span>
@@ -314,22 +247,25 @@
 <span class="nx">selectOption</span><span class="p">(</span><span class="nx">HTMLElement</span> <span class="nx">li</span><span class="p">,</span> <span class="nx">event</span><span class="p">)</span>
 </pre></div>
 
-<h2>Events</h2>
+<h2>
+<a name="events" class="anchor" href="#events"><span class="octicon octicon-link"></span></a>Events</h2>
 
 <p>Events are fired on the original select element. You can bind events like this:</p>
 
-<div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">'select'</span><span class="p">).</span><span class="nx">selectBox</span><span class="p">().</span><span class="nx">change</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<div class="highlight highlight-javascript"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">'select'</span><span class="p">).</span><span class="nx">ultimateSelect</span><span class="p">().</span><span class="nx">change</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="nx">alert</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">val</span><span class="p">());</span>
 <span class="p">});</span>
 </pre></div>
 
-<h3>Available events</h3>
+<h3>
+<a name="available-events" class="anchor" href="#available-events"><span class="octicon octicon-link"></span></a>Available events</h3>
 
 <table>
-<tr>
+<thead><tr>
 <th>Key</th>
 <th>Description</th>
-</tr>
+</tr></thead>
+<tbody>
 <tr>
 <td>focus</td>
 <td>Fired when the control gains focus</td>
@@ -358,29 +294,28 @@
 <td>close</td>
 <td>Fired after a dropdown menu closes (not cancelable)</td>
 </tr>
-</table><h3>Known Issues</h3>
+</tbody>
+</table><h2>
+<a name="maintained" class="anchor" href="#maintained"><span class="octicon octicon-link"></span></a>Maintained</h2>
 
-<ul>
-<li>The blur and focus callbacks are not very reliable in IE7. The change callback works fine.</li>
-</ul><h2>Credits</h2>
+<p>This fork is maintained by <a href="http://github.com/ionutvmi">Mihai Ionut Vilcu</a></p>
 
-<p>Original plugin by Cory LaViska of A Beautiful Site, LLC. (<a href="http://www.abeautifulsite.net/">http://www.abeautifulsite.net/</a>)</p>
+<h2>
+<a name="credits" class="anchor" href="#credits"><span class="octicon octicon-link"></span></a>Credits</h2>
+
+<p>This is a fork after <a href="https://github.com/marcj/jquery-selectBox">marcj/jquery-selectBox</a></p>
       </section>
+    </div>
 
-      <footer>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <p>this project by <a href="https://github.com/marcj">marcj</a> can be found on <a href="https://github.com/marcj/jquery-selectBox">GitHub</a></p>
-          </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
-        <span class="octocat"></span>
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">ultimateSelect maintained by <a href="https://github.com/ionutvmi">ionutvmi</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
-
     </div>
 
     
+
   </body>
 </html>
