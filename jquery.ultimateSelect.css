@@ -120,7 +120,7 @@
     background: 6px center no-repeat;
 }
 
-.ultimateSelect-options li.ultimateSelect-hover a {
+.ultimateSelect-options li:hover a {
     background-color: #EEE;
 }
 

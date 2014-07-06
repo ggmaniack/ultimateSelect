@@ -68,9 +68,9 @@
         }
 
         var $control    = $('<div class="ultimateSelect" />'),
-            inline   = $select.attr('multiple') || parseInt($select.attr('size')) > 1,
+            inline   = $select.attr('multiple') || parseInt($select.attr('size'), 10) > 1,
             settings = options || {},
-            tabIndex = parseInt($select.prop('tabindex')) || 0,
+            tabIndex = parseInt($select.prop('tabindex'), 10) || 0,
             self     = this;
 
         $control
@@ -143,7 +143,7 @@
 
             // Auto-height based on size attribute
             if ( ! $select[0].style.height) {
-                var size = $select.attr('size') ? parseInt($select.attr('size')) : 5;
+                var size = $select.attr('size') ? parseInt($select.attr('size'), 10) : 5;
                 // Draw a dummy control off-screen, measure, and remove it
                 var tmp = $control
                     .clone()
@@ -155,7 +155,7 @@
                     .show()
                     .appendTo('body');
                 tmp.find('.ultimateSelect-options').html('<li><a>\u00A0</a></li>');
-                var optionHeight = parseInt(tmp.find('.ultimateSelect-options A:first').html('&nbsp;').outerHeight());
+                var optionHeight = parseInt(tmp.find('.ultimateSelect-options A:first').html('&nbsp;').outerHeight(), 10);
                 tmp.remove();
                 $control.height(optionHeight * size);
             }
@@ -212,8 +212,8 @@
             // Set label width
             var labelWidth =
                     $control.width() - arrow.outerWidth() -
-                    (parseInt(label.css('paddingLeft')) || 0) -
-                    (parseInt(label.css('paddingRight')) || 0);
+                    (parseInt(label.css('paddingLeft'), 10) || 0) -
+                    (parseInt(label.css('paddingRight'), 10) || 0);
 
             label.width(labelWidth);
             this.disableSelection($control);
@@ -266,12 +266,6 @@
                 $options = _getOptions($select, $options);
                 $options
                     .find('A')
-                    .bind('mouseover.ultimateSelect', function() {
-                        self.addHover($(this).parent());
-                    })
-                    .bind('mouseout.ultimateSelect',function() {
-                        self.removeHover($(this).parent());
-                    })
                     .bind('mousedown.ultimateSelect',function (event) {
                         if (1 !== event.which) {
                             return;
@@ -326,12 +320,6 @@
                         }
                         self.selectOption($(this).parent());
                         self.hideMenus();
-                    })
-                    .bind('mouseover.ultimateSelect', function() {
-                        self.addHover($(this).parent());
-                    })
-                    .bind('mouseout.ultimateSelect', function() {
-                        self.removeHover($(this).parent());
                     });
 
                 // Inherit classes for dropdown menu
@@ -458,8 +446,8 @@
         this.hideMenus();
 
         // Get top and bottom width of ultimateSelect
-        var borderBottomWidth = parseInt($control.css('borderBottomWidth')) || 0;
-        var borderTopWidth = parseInt($control.css('borderTopWidth')) || 0;
+        var borderBottomWidth = parseInt($control.css('borderBottomWidth'), 10) || 0;
+        var borderTopWidth = parseInt($control.css('borderTopWidth'), 10) || 0;
 
         // Get proper variables for keeping options in viewport
         var pos = $control.offset(),
@@ -467,7 +455,7 @@
             bottomPositionCorrelation = settings.bottomPositionCorrelation || 0,
             optionsHeight = $options.outerHeight(),
             controlHeight = $control.outerHeight(),
-            maxHeight = parseInt($options.css('max-height')),
+            maxHeight = parseInt($options.css('max-height'), 10),
             scrollPos = $window.scrollTop(),
             heightToTop = pos.top - scrollPos,
             heightToBottom = $window.height() - ( heightToTop + controlHeight ),
@@ -536,7 +524,6 @@
         // Center on selected option
         var $li = $options.find('.ultimateSelect-selected:first');
         this.keepOptionInView($li, true);
-        this.addHover($li);
         $control.addClass('ultimateSelect-menuShowing ultimateSelect-menuShowing-'+(posTop ? 'top' : 'bottom'));
 
         $document.bind('mousedown.ultimateSelect', function (event) {
@@ -684,21 +671,6 @@
     };
 
     /**
-     * Adds the hover class.
-     *
-     * @param {HTMLElement} li
-     */
-    UltimateSelect.prototype.addHover = function (li) {
-        var $li = $(li),
-            $select = $(this.selectElement),
-            $control   = $select.data('ultimateSelect-control'),
-            $options = $control.data('ultimateSelect-options');
-
-        $options.find('.ultimateSelect-hover').removeClass('ultimateSelect-hover');
-        $li.addClass('ultimateSelect-hover');
-    };
-
-    /**
      * Returns the original HTML select element.
      *
      * @returns {HTMLElement}
@@ -707,17 +679,6 @@
         return this.selectElement;
     };
 
-    /**
-     * Remove the hover class.
-     *
-     */
-    UltimateSelect.prototype.removeHover = function () {
-        var $select = $(this.selectElement),
-            $control = $select.data('ultimateSelect-control'),
-            $options = $control.data('ultimateSelect-options');
-
-        $options.find('.ultimateSelect-hover').removeClass('ultimateSelect-hover');
-    };
 
     /**
      * Checks if the widget is in the view.
@@ -734,8 +695,8 @@
             $control  = $select.data('ultimateSelect-control'),
             $options  = $control.data('ultimateSelect-options'),
             scrollBox = $control.hasClass('ultimateSelect-dropdown') ? $options : $options.parent(),
-            top       = parseInt($li.offset().top -scrollBox.position().top),
-            bottom    = parseInt(top + $li.outerHeight());
+            top       = parseInt($li.offset().top -scrollBox.position().top, 10),
+            bottom    = parseInt(top + $li.outerHeight(), 10);
 
         if (center) {
             scrollBox.scrollTop($li.offset().top - scrollBox.offset().top + scrollBox.scrollTop() -
@@ -780,12 +741,11 @@
             case 27:
                 // esc
                 this.hideMenus();
-                this.removeHover();
                 break;
             case 13:
                 // enter
                 if ($control.hasClass('ultimateSelect-menuShowing')) {
-                    this.selectOption($options.find('LI.ultimateSelect-hover:first'), event);
+                    this.selectOption($options.find('LI.ultimateSelect-selected:first'), event);
                     if ($control.hasClass('ultimateSelect-dropdown')) {
                         this.hideMenus();
                     }
@@ -799,26 +759,25 @@
                 // left
                 event.preventDefault();
                 if ($control.hasClass('ultimateSelect-menuShowing')) {
-                    var prev = $options.find('.ultimateSelect-hover').prev('LI');
+                    var $prev = $options.find('.ultimateSelect-selected').prev('li');
                     totalOptions = $options.find('LI:not(.ultimateSelect-optgroup)').length;
                     i = 0;
-                    while (prev.length === 0 || prev.hasClass('ultimateSelect-disabled') ||
-                        prev.hasClass('ultimateSelect-optgroup')) {
-                        prev = prev.prev('LI');
-                        if (prev.length === 0) {
+                    while ($prev.length === 0 || $prev.hasClass('ultimateSelect-disabled') ||
+                        $prev.hasClass('ultimateSelect-optgroup')) {
+                        $prev = $prev.prev('LI');
+                        if ($prev.length === 0) {
                             if (settings.loopOptions) {
-                                prev = $options.find('LI:last');
+                                $prev = $options.find('LI:last');
                             } else {
-                                prev = $options.find('LI:first');
+                                $prev = $options.find('LI:first');
                             }
                         }
                         if (++i >= totalOptions) {
                             break;
                         }
                     }
-                    this.addHover(prev);
-                    this.selectOption(prev, event);
-                    this.keepOptionInView(prev);
+                    this.selectOption($prev, event);
+                    this.keepOptionInView($prev);
                 } else {
                     this.showMenu();
                 }
@@ -829,26 +788,25 @@
                 // right
                 event.preventDefault();
                 if ($control.hasClass('ultimateSelect-menuShowing')) {
-                    var next = $options.find('.ultimateSelect-hover').next('LI');
-                    totalOptions = $options.find('LI:not(.ultimateSelect-optgroup)').length;
+                    var $next = $options.find('.ultimateSelect-selected').next('LI');
+                    totalOptions = $options.find('li:not(.ultimateSelect-optgroup)').length;
                     i = 0;
-                    while (0 === next.length || next.hasClass('ultimateSelect-disabled') ||
-                        next.hasClass('ultimateSelect-optgroup')) {
-                        next = next.next('LI');
-                        if (next.length === 0) {
+                    while ($next.length === 0 || $next.hasClass('ultimateSelect-disabled') ||
+                        $next.hasClass('ultimateSelect-optgroup')) {
+                        $next = $next.next('li');
+                        if ($next.length === 0) {
                             if (settings.loopOptions) {
-                                next = $options.find('LI:first');
+                                $next = $options.find('li:first');
                             } else {
-                                next = $options.find('LI:last');
+                                $next = $options.find('li:last');
                             }
                         }
                         if (++i >= totalOptions) {
                             break;
                         }
                     }
-                    this.addHover(next);
-                    this.selectOption(next, event);
-                    this.keepOptionInView(next);
+                    this.selectOption($next, event);
+                    this.keepOptionInView($next);
                 } else {
                     this.showMenu();
                 }
@@ -899,7 +857,6 @@
                 this.typeSearch += String.fromCharCode(event.charCode || event.keyCode);
                 $options.find('A').each(function () {
                     if ($(this).text().substr(0, self.typeSearch.length).toLowerCase() === self.typeSearch.toLowerCase()) {
-                        self.addHover($(this).parent());
                         self.selectOption($(this).parent(), event);
                         self.keepOptionInView($(this).parent());
                         return false;
@@ -1044,14 +1001,22 @@
      * Generates the options.
      *
      * @param {jQuery} self
-     * @param {jQuery} options
+     * @param {jQuery} $options
      */
-    UltimateSelect.prototype.generateOptions = function (self, options) {
+    UltimateSelect.prototype.generateOptions = function (self, $options) {
         var $li = $('<li />'),
             $a = $('<a />');
         $li.addClass(self.attr('class'));
         $li.data(self.data());
-        $a.attr('rel', self.val()).text(self.text());
+
+        var text = self.text();
+        $a.attr('rel', self.val())
+          .text(text);
+
+        if(text.length > 20) {
+          $a.attr('title', text);
+        }
+
         $li.append($a);
         if (self.attr('disabled')) {
             $li.addClass('ultimateSelect-disabled');
@@ -1059,7 +1024,7 @@
         if (self.attr('selected')) {
             $li.addClass('ultimateSelect-selected');
         }
-        options.append($li);
+        $options.append($li);
     };
 
     /**

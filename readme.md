@@ -1,6 +1,11 @@
 # UltimateSelect 
 
-A modern style-able replacement for SELECT elements.
+A modern styleable replacement for SELECT elements.
+
+## New Features (1.3.x)
+
+* Mobile/touch friendly
+
 
 ## Features
 
@@ -13,7 +18,7 @@ A modern style-able replacement for SELECT elements.
 * Type to search when the control has focus
 * Auto-height based on the size attribute (to use, omit the height property in your CSS!)
 * Tested in IE8+, Firefox, recent WebKit browsers
-* Mobile friendly (new)
+
 
 ## Usage
 
@@ -85,8 +90,7 @@ $('select').ultimateSelect('methodName', [option]);
 | options        | If passed either a string of HTML or a JSON object, replaces the existing options; otherwise Returns the options container element as a jQuery object |
 | control        | Returns the UltimateSelect control element (an anchor tag) for working with directly               |
 | refresh        | Updates the UltimateSelect control's options based on the original controls options                |
-| instance       | Returns the UltimateSelect instance, where you have more methods available (only in v1.2.0-dev     |
-                 | available) as in the `UltimateSelect` class below.                                                 |
+| instance       | Returns the UltimateSelect instance, where you have more methods available (only in v1.2.0-dev available) as in the `UltimateSelect` class below.    |
 
 ## API `UltimateSelect`
 
