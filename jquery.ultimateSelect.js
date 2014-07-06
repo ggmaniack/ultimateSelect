@@ -74,11 +74,9 @@
             self     = this;
 
         $control
-            .width($select.outerWidth())
             .addClass($select.attr('class'))
             .attr('title', $select.attr('title') || '')
             .attr('tabindex', tabIndex)
-            .css('display', 'inline-block')
             .bind('focus.ultimateSelect', function () {
                 if (this !== document.activeElement && document.body !== document.activeElement) {
                     $(document.activeElement).blur();
@@ -121,14 +119,15 @@
 
             $control
                 .append(options)
-                .data('ultimateSelect-options', options).addClass('ultimateSelect-inline ultimateSelect-menuShowing')
+                .data('ultimateSelect-options', options)
+                .addClass('ultimateSelect-inline ultimateSelect-menuShowing')
                 .bind('keydown.ultimateSelect', function (event) {
                     self.handleKeyDown(event);
                 })
                 .bind('keypress.ultimateSelect',function (event) {
                     self.handleKeyPress(event);
                 })
-                .bind('mousedown.ultimateSelect',function (event) {
+                .bind('click.ultimateSelect',function (event) {
                     if (1 !== event.which) {
                         return;
                     }
@@ -175,18 +174,12 @@
                 .addClass('ultimateSelect-dropdown')
                 .append(label)
                 .append(arrow)
-                .bind('mousedown.ultimateSelect', function (event) {
-                    if (1 === event.which) {
-                        if ($control.hasClass('ultimateSelect-menuShowing')) {
-                            self.hideMenus();
-                        } else {
-                            event.stopPropagation();
-                            // Webkit fix to prevent premature selection of options
-                            options
-                                .data('ultimateSelect-down-at-x', event.screenX)
-                                .data('ultimateSelect-down-at-y', event.screenY);
-                            self.showMenu();
-                        }
+                .bind('click.ultimateSelect', function (event) {
+                    if ($control.hasClass('ultimateSelect-menuShowing')) {
+                        self.hideMenus();
+                    } else {
+                        event.stopPropagation();
+                        self.showMenu();
                     }
                 })
                 .bind('keydown.ultimateSelect', function (event) {
@@ -222,8 +215,9 @@
         $select
             .addClass('ultimateSelect')
             .data('ultimateSelect-control', $control)
-            .data('ultimateSelect-settings', settings)
-            .hide();
+            .data('ultimateSelect-settings', settings);
+        // hide the real select
+        this.hideSelect();
     };
 
     /**
@@ -266,19 +260,13 @@
                 $options = _getOptions($select, $options);
                 $options
                     .find('A')
-                    .bind('mousedown.ultimateSelect',function (event) {
-                        if (1 !== event.which) {
-                            return;
-                        }
-                        event.preventDefault(); // Prevent options from being "dragged"
+                    .bind('click.ultimateSelect', function (event) {
+                        event.preventDefault();
+
                         if ( ! $select.ultimateSelect('control').hasClass('ultimateSelect-active')) {
                             $select.ultimateSelect('control').focus();
                         }
-                    })
-                    .bind('mouseup.ultimateSelect', function (event) {
-                        if (1 !== event.which) {
-                            return;
-                        }
+
                         self.hideMenus();
                         self.selectOption($(this).parent(), event);
                     });
@@ -294,30 +282,7 @@
                     .css('display', 'none')
                     .appendTo('BODY')
                     .find('A')
-                    .bind('mousedown.ultimateSelect', function (event) {
-                        if (event.which === 1) {
-                            event.preventDefault(); // Prevent options from being "dragged"
-                            if (event.screenX === $options.data('ultimateSelect-down-at-x') &&
-                                event.screenY === $options.data('ultimateSelect-down-at-y')) {
-                                $options.removeData('ultimateSelect-down-at-x').removeData('ultimateSelect-down-at-y');
-                                if (/android/i.test(navigator.userAgent.toLowerCase()) &&
-                                    /chrome/i.test(navigator.userAgent.toLowerCase())) {
-                                    self.selectOption($(this).parent());
-                                }
-                                self.hideMenus();
-                            }
-                        }
-                    })
-                    .bind('mouseup.ultimateSelect', function (event) {
-                        if (1 !== event.which) {
-                            return;
-                        }
-                        if (event.screenX === $options.data('ultimateSelect-down-at-x') &&
-                            event.screenY === $options.data('ultimateSelect-down-at-y')) {
-                            return;
-                        } else {
-                            $options.removeData('ultimateSelect-down-at-x').removeData('ultimateSelect-down-at-y');
-                        }
+                    .bind('click.ultimateSelect', function () {
                         self.selectOption($(this).parent());
                         self.hideMenus();
                     });
@@ -392,8 +357,8 @@
             .removeData('ultimateSelect-control')
             .data('ultimateSelect-control', null)
             .removeData('ultimateSelect-settings')
-            .data('ultimateSelect-settings', null)
-            .show();
+            .data('ultimateSelect-settings', null);
+            this.showSelect();
     };
 
     /**
@@ -526,11 +491,8 @@
         this.keepOptionInView($li, true);
         $control.addClass('ultimateSelect-menuShowing ultimateSelect-menuShowing-'+(posTop ? 'top' : 'bottom'));
 
-        $document.bind('mousedown.ultimateSelect', function (event) {
-            if (event.which === 1) {
-                if ($(event.target).parents().andSelf().hasClass('ultimateSelect-options')) {
-                    return;
-                }
+        $document.bind('click.ultimateSelect', function (event) {
+            if ( ! $(event.target).parents().andSelf().hasClass('ultimateSelect-options')) {
                 self.hideMenus();
             }
         });
@@ -544,7 +506,7 @@
             return;
         }
 
-        $(document).unbind('mousedown.ultimateSelect');
+        $document.unbind('click.ultimateSelect');
         $('.ultimateSelect-dropdown-menu').each(function () {
             var $options = $(this),
                 $select = $options.data('ultimateSelect-select'),
@@ -1027,6 +989,31 @@
         $options.append($li);
     };
 
+    UltimateSelect.prototype.hideSelect = function() {
+        var $select = $(this.selectElement);
+        // hide it
+        $select.css({
+            width: '1px',
+            height: '1px',
+            position: 'absolute',
+            opacity: '0',
+            filter: 'alpha(opacity=0)'
+        });
+
+    };
+    UltimateSelect.prototype.showSelect = function() {
+        var $select = $(this.selectElement);
+
+        // show it
+        $select.css({
+            width: '',
+            height: '',
+            position: '',
+            opacity: '',
+            filter: ''
+        });
+
+    };
     /**
      * Extends the jQuery.fn object.
      */
@@ -1130,4 +1117,6 @@
             return $this;
         }
     });
+
+
 })(jQuery, window, document);

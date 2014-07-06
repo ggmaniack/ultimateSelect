@@ -2,7 +2,7 @@
 
 A modern styleable replacement for SELECT elements.
 
-## New Features (1.3.x)
+## New Features (1.0.x)
 
 * Mobile/touch friendly
 

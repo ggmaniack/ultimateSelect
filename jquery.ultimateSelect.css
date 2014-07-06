@@ -79,6 +79,7 @@
 /* Inline control */
 .ultimateSelect-inline {
     min-width: 150px;
+    max-width: 100%;
     outline: none;
     border: solid 1px #BBB;
     background: #FFF;
