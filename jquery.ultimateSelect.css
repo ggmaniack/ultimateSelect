@@ -9,48 +9,36 @@
     color: #000;
     outline: none;
     vertical-align: middle;
+
     background: #F2F2F2;
     background: -moz-linear-gradient(top, #F8F8F8 1%, #E1E1E1 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(1%, #F8F8F8), color-stop(100%, #E1E1E1));
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F8F8F8', endColorstr='#E1E1E1', GradientType=0);
-    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, .75);
+
     -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .75);
     box-shadow: 0 1px 0 rgba(255, 255, 255, .75);
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
+
     border-radius: 4px;
     display: inline-block;
     cursor: default;
 }
 
-.ultimateSelect-dropdown:focus,
-.ultimateSelect-dropdown:focus .ultimateSelect-arrow {
-    border-color: #666;
-}
-
 .ultimateSelect-dropdown.ultimateSelect-menuShowing-bottom {
-    -moz-border-radius-bottomleft: 0;
-    -moz-border-radius-bottomright: 0;
-    -webkit-border-bottom-left-radius: 0;
-    -webkit-border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
 
 .ultimateSelect-dropdown.ultimateSelect-menuShowing-top {
-    -moz-border-radius-topleft: 0;
-    -moz-border-radius-topright: 0;
-    -webkit-border-top-left-radius: 0;
-    -webkit-border-top-right-radius: 0;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
 
 .ultimateSelect-dropdown .ultimateSelect-label {
-    padding: 2px 8px;
-    display: inline-block;
+    padding: 3px 8px;
+    display: block;
     white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .ultimateSelect-dropdown .ultimateSelect-arrow {
@@ -59,7 +47,19 @@
     right: 0;
     width: 23px;
     height: 100%;
-    border-left: solid 1px #BBB;
+    border-left: 1px solid #BBB;
+}
+.ultimateSelect-dropdown .ultimateSelect-arrow:before {
+    content: " ";
+    position: absolute;
+    border: 5px solid transparent;
+    border-top: 5px solid #000;
+    left: 0;
+    right: 0;
+    top: 50%;
+    margin: auto;
+    width: 0;
+    height: 0;
 }
 
 /* Dropdown menu */
@@ -70,7 +70,6 @@
     min-height: 1em;
     border: solid 1px #BBB; /* should be the same border width as .ultimateSelect-dropdown */
     background: #FFF;
-    -moz-box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
     -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
     box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
     overflow: auto;
@@ -84,20 +83,15 @@
     border: solid 1px #BBB;
     background: #FFF;
     display: inline-block;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
     border-radius: 4px;
     overflow: auto;
 }
 
-.ultimateSelect-inline:focus {
-    border-color: #666;
-}
 
 /* Options */
 .ultimateSelect-options,
-.ultimateSelect-options LI,
-.ultimateSelect-options LI A {
+.ultimateSelect-options li,
+.ultimateSelect-options li a {
     list-style: none;
     display: block;
     cursor: default;
@@ -108,41 +102,34 @@
 .ultimateSelect-options.ultimateSelect-options-top{
     border-bottom:none;
 	margin-top:1px;
-	-moz-border-radius-topleft: 5px;
-    -moz-border-radius-topright: 5px;
-    -webkit-border-top-left-radius: 5px;
-    -webkit-border-top-right-radius: 5px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
 .ultimateSelect-options.ultimateSelect-options-bottom{
 	border-top:none;
-    -moz-border-radius-bottomleft: 5px;
-    -moz-border-radius-bottomright: 5px;
-    -webkit-border-bottom-left-radius: 5px;
-    -webkit-border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
 
-.ultimateSelect-options LI A {
+.ultimateSelect-options li a {
     line-height: 1.5;
     padding: 0 .5em;
     white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
     background: 6px center no-repeat;
 }
 
-.ultimateSelect-options LI.ultimateSelect-hover A {
+.ultimateSelect-options li.ultimateSelect-hover a {
     background-color: #EEE;
 }
 
-.ultimateSelect-options LI.ultimateSelect-disabled A {
+.ultimateSelect-options li.ultimateSelect-disabled a {
     color: #888;
     background-color: transparent;
 }
 
-.ultimateSelect-options LI.ultimateSelect-selected A {
+.ultimateSelect-options li.ultimateSelect-selected a {
     background-color: #C8DEF4;
 }
 
@@ -153,6 +140,8 @@
     line-height: 1.5;
     padding: 0 .3em;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Disabled state */
