@@ -721,23 +721,30 @@
                 // left
                 event.preventDefault();
                 if ($control.hasClass('ultimateSelect-menuShowing')) {
+
                     var $prev = $options.find('.ultimateSelect-selected').prev('li');
                     totalOptions = $options.find('LI:not(.ultimateSelect-optgroup)').length;
                     i = 0;
-                    while ($prev.length === 0 || $prev.hasClass('ultimateSelect-disabled') ||
-                        $prev.hasClass('ultimateSelect-optgroup')) {
+
+                    while ($prev.length === 0 ||
+                           $prev.hasClass('ultimateSelect-disabled') ||
+                           $prev.hasClass('ultimateSelect-optgroup')) {
+
                         $prev = $prev.prev('LI');
+
                         if ($prev.length === 0) {
                             if (settings.loopOptions) {
                                 $prev = $options.find('LI:last');
                             } else {
-                                $prev = $options.find('LI:first');
+                                return;
                             }
                         }
                         if (++i >= totalOptions) {
                             break;
                         }
+
                     }
+
                     this.selectOption($prev, event);
                     this.keepOptionInView($prev);
                 } else {
@@ -753,15 +760,19 @@
                     var $next = $options.find('.ultimateSelect-selected').next('LI');
                     totalOptions = $options.find('li:not(.ultimateSelect-optgroup)').length;
                     i = 0;
-                    while ($next.length === 0 || $next.hasClass('ultimateSelect-disabled') ||
-                        $next.hasClass('ultimateSelect-optgroup')) {
+                    while ( $next.length === 0 ||
+                            $next.hasClass('ultimateSelect-disabled') ||
+                            $next.hasClass('ultimateSelect-optgroup')) {
+
                         $next = $next.next('li');
                         if ($next.length === 0) {
+
                             if (settings.loopOptions) {
                                 $next = $options.find('li:first');
                             } else {
-                                $next = $options.find('li:last');
+                                return;
                             }
+
                         }
                         if (++i >= totalOptions) {
                             break;
@@ -990,28 +1001,10 @@
     };
 
     UltimateSelect.prototype.hideSelect = function() {
-        var $select = $(this.selectElement);
-        // hide it
-        $select.css({
-            width: '1px',
-            height: '1px',
-            position: 'absolute',
-            opacity: '0',
-            filter: 'alpha(opacity=0)'
-        });
-
+        $(this.selectElement).hide();
     };
     UltimateSelect.prototype.showSelect = function() {
-        var $select = $(this.selectElement);
-
-        // show it
-        $select.css({
-            width: '',
-            height: '',
-            position: '',
-            opacity: '',
-            filter: ''
-        });
+        var $select = $(this.selectElement).show();
 
     };
     /**
