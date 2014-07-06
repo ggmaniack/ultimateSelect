@@ -121,8 +121,6 @@ setLabel()
 setOptions(Object options)
 setValue(String value)
 
-removeHover(HTMLElement li)
-addHover(HTMLElement li)
 
 disableSelection(HTMLElement selector)
 generateOptions(jQuery self, jQuery options)
