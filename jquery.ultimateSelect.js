@@ -19,10 +19,10 @@
      * UltimateSelect class.
      *
      * @param {HTMLElement|jQuery} select If it's a jQuery object, we use the first element.
-     * @param {Object}             options
+     * @param {Object}             settings
      * @constructor
      */
-    var UltimateSelect = window.UltimateSelect = function (select, options) {
+    var UltimateSelect = window.UltimateSelect = function (select, settings) {
         // make sure we receive a jQuery object
         if (select instanceof jQuery) {
             if (select.length > 0) {
@@ -32,14 +32,15 @@
             }
         }
 
+        settings = this.getSettings(settings);
+
         this.typeTimer     = null;
         this.typeSearch    = '';
         this.isMac         = navigator.platform.match(/mac/i);
-        options            = 'object' === typeof options ? options :  {};
         this.selectElement = select;
 
         // Disable for iOS devices (their native controls are more suitable for a touch device)
-        if ( ! options.mobile && navigator.userAgent.match(/iPad|iPhone|Android|IEMobile|BlackBerry/i)) {
+        if ( ! settings.mobile && navigator.userAgent.match(/iPad|iPhone|Android|IEMobile|BlackBerry/i)) {
             return false;
         }
 
@@ -48,7 +49,7 @@
             return false;
         }
 
-        this.init(options);
+        this.init(settings);
     };
 
     /**
@@ -61,16 +62,19 @@
      *
      * @returns {Boolean}
      */
-    UltimateSelect.prototype.init = function (options) {
+    UltimateSelect.prototype.init = function (settings) {
         var $select = $(this.selectElement);
+
         if ($select.data('ultimateSelect-control')) {
             return false;
         }
 
+        settings = settings || {};
+
         var $control    = $('<div class="ultimateSelect" />'),
             inline   = $select.attr('multiple') || parseInt($select.attr('size'), 10) > 1,
-            settings = options || {},
             tabIndex = parseInt($select.prop('tabindex'), 10) || 0,
+            $options,
             self     = this;
 
         $control
@@ -115,11 +119,11 @@
         // Generate control
         if (inline) {
             // Inline controls
-            options = this.getOptions('inline');
+            $options = this.getOptions('inline');
 
             $control
-                .append(options)
-                .data('ultimateSelect-options', options)
+                .append($options)
+                .data('ultimateSelect-options', $options)
                 .addClass('ultimateSelect-inline ultimateSelect-menuShowing')
                 .bind('keydown.ultimateSelect', function (event) {
                     self.handleKeyDown(event);
@@ -161,19 +165,19 @@
             this.disableSelection($control);
         } else {
             // Dropdown controls
-            var label = $('<span class="ultimateSelect-label" />'),
-                arrow = $('<span class="ultimateSelect-arrow" />');
+            var $label = $('<span class="ultimateSelect-label" />'),
+                $arrow = $('<span class="ultimateSelect-arrow" />');
 
             // Update label
-            label.attr('class', this.getLabelClass()).text(this.getLabelText());
-            options = this.getOptions('dropdown');
-            options.appendTo('BODY');
+            $label.attr('class', this.getLabelClass()).text(this.getLabelText());
+            $options = this.getOptions('dropdown');
+            $options.appendTo('BODY');
 
             $control
-                .data('ultimateSelect-options', options)
+                .data('ultimateSelect-options', $options)
                 .addClass('ultimateSelect-dropdown')
-                .append(label)
-                .append(arrow)
+                .append($label)
+                .append($arrow)
                 .bind('click.ultimateSelect', function (event) {
                     if ($control.hasClass('ultimateSelect-menuShowing')) {
                         self.hideMenus();
@@ -202,13 +206,6 @@
                 })
                 .insertAfter($select);
 
-            // Set label width
-            var labelWidth =
-                    $control.width() - arrow.outerWidth() -
-                    (parseInt(label.css('paddingLeft'), 10) || 0) -
-                    (parseInt(label.css('paddingRight'), 10) || 0);
-
-            label.width(labelWidth);
             this.disableSelection($control);
         }
         // Store data for later use and show the control
@@ -216,6 +213,7 @@
             .addClass('ultimateSelect')
             .data('ultimateSelect-control', $control)
             .data('ultimateSelect-settings', settings);
+
         // hide the real select
         this.hideSelect();
     };
@@ -999,14 +997,51 @@
         }
         $options.append($li);
     };
-
+    /**
+     * Will hide the <select> element
+     * @return {null}
+     */
     UltimateSelect.prototype.hideSelect = function() {
         $(this.selectElement).hide();
     };
+    /**
+     * Will show the <select> element
+     * @return {null}
+     */
     UltimateSelect.prototype.showSelect = function() {
         var $select = $(this.selectElement).show();
-
     };
+    /**
+     * Will merge the user settings with the default ones
+     * @param  {Object} opt The user settings
+     * @return {Object}     The merged object
+     */
+    UltimateSelect.prototype.getSettings = function (opt) {
+        // default settings
+        this._settings = {
+            // Disables the widget for mobile devices
+            mobile: true,
+            // The show/hide transition for dropdown menus
+            menuTransition: 'default',
+            // The show/hide transition speed
+            menuSpeed: 'normal',
+            // Flag to allow arrow keys to loop through options
+            loopOptions: false,
+            // Will be plused to top position if droplist will be show at the top
+            topPositionCorrelation: 0,
+            // Will be substracted from top position if droplist will be shown at the bottom
+            bottomPositionCorrelation: 0,
+            // If false then showed droplist will not hide itself on window scroll event
+            hideOnWindowScroll: true,
+            // If set to false, the droplist will be always open towards the bottom
+            keepInViewport: true
+        };
+
+        return $.extend(true, this._settings, opt);
+
+    }
+
+
     /**
      * Extends the jQuery.fn object.
      */

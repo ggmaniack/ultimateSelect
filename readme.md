@@ -53,7 +53,7 @@ $('select').ultimateSelect({
 
 | Key                       | Default       | Values                     |  Description                                                                  |
 | --------------------------|:-------------:|---------------------------:|------------------------------------------------------------------------------:|
-| mobile                    | `false`       | Boolean                    | Disables the widget for mobile devices                                        |
+| mobile                    | `true`        | Boolean                    | If true it will show the widget on mobile devices also                        |
 | menuTransition            | `default`     | `default`, `slide`, `fade` | The show/hide transition for dropdown menus                                   |
 | menuSpeed                 | `normal`      | `slow`, `normal`, `fast`   | The show/hide transition speed                                                |
 | loopOptions               | `false`       | Boolean                    | Flag to allow arrow keys to loop through options                              |
@@ -98,6 +98,11 @@ You can instantiate the UltimateSelect also through a classic OOP way:
 
 ```javascript
 var ultimateSelect = new UltimateSelect($('#mySelect'), settings = {});
+ultimateSelect.showMenu();
+
+// or 
+var $select = $('#mySelect').ultimateSelect();
+var ultimateSelect = $select.data('ultimateSelect'); 
 ultimateSelect.showMenu();
 ```
 
