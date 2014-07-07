@@ -45,22 +45,42 @@ $('select').ultimateSelect();
 // or with custom settings
 $('select').ultimateSelect({
     mobile: true,
+    menuTransition: 'slide',
     menuSpeed: 'fast'
 });
 ```
 
 ## Settings
 
-| Key                       | Default       | Values                     |  Description                                                                  |
-| --------------------------|:-------------:|---------------------------:|------------------------------------------------------------------------------:|
-| mobile                    | `true`        | Boolean                    | If true it will show the widget on mobile devices also                        |
-| menuTransition            | `default`     | `default`, `slide`, `fade` | The show/hide transition for dropdown menus                                   |
-| menuSpeed                 | `normal`      | `slow`, `normal`, `fast`   | The show/hide transition speed                                                |
-| loopOptions               | `false`       | Boolean                    | Flag to allow arrow keys to loop through options                              |
-| topPositionCorrelation    | `0`           | Integer                    | Will be plused to top position if droplist will be show at the top            |
-| bottomPositionCorrelation | `0`           | Integer                    | Will be substracted from top position if droplist will be shown at the bottom |
-| hideOnWindowScroll        | `true`        | Boolean                    | If false then showed droplist will not hide itself on window scroll event     |
-| keepInViewport            | `true`        | Boolean                    | If set to false, the droplist will be always open towards the bottom          |
+| Key                       | Default       | Values                                   |  Description                                                                  |
+| --------------------------|:-------------:|:----------------------------------------:|------------------------------------------------------------------------------:|
+| mobile                    | `true`        | Boolean                                  | If true it will show the widget on mobile devices also                        |
+| menuTransition            | `default`     | `default`, `slide`, `fade`               | The show/hide transition for dropdown menus                                   |
+| menuSpeed                 | `1`           | `slow`, `normal`, `fast` or an integer   | The show/hide transition time in miliseconds                                  |
+| loopOptions               | `false`       | Boolean                                  | Flag to allow arrow keys to loop through options                              |
+| topPositionCorrelation    | `0`           | Integer                                  | Will be plused to top position if droplist will be show at the top            |
+| bottomPositionCorrelation | `0`           | Integer                                  | Will be substracted from top position if droplist will be shown at the bottom |
+| hideOnWindowScroll        | `true`        | Boolean                                  | If false then showed droplist will not hide itself on window scroll event     |
+| keepInViewport            | `true`        | Boolean                                  | If set to false, the droplist will be always open towards the bottom          |
+| mobileBehaviour           | `native`      | `native`, `custom`                       | If `mobile` == true this is used to determine how the select should behave on mobile          |
+
+
+## Callbacks 
+
+Callbacks are passed with the settings like this
+
+```javascript
+$("#mySelect").ultimateSelect({
+    mobile: true,
+    isMobile: function() {
+        return true;
+    }
+});
+```  
+
+| Callback                      |Params         | Returns     | Description                                                          |
+| ------------------------------|---------------|:-----------:|:--------------------------------------------------------------------:|
+| isMobile()                    | none          | `boolean`   | function to determine if the current user is on a mobile device      |
 
 
 To specify settings after the init, use this syntax:
@@ -90,7 +110,7 @@ $('select').ultimateSelect('methodName', [option]);
 | options        | If passed either a string of HTML or a JSON object, replaces the existing options; otherwise Returns the options container element as a jQuery object |
 | control        | Returns the UltimateSelect control element (an anchor tag) for working with directly               |
 | refresh        | Updates the UltimateSelect control's options based on the original controls options                |
-| instance       | Returns the UltimateSelect instance, where you have more methods available (only in v1.2.0-dev available) as in the `UltimateSelect` class below.    |
+| instance       | Returns the UltimateSelect instance, where you have more methods available as in the `UltimateSelect` class below.    |
 
 ## API `UltimateSelect`
 
@@ -133,7 +153,6 @@ handleKeyDown(event)
 handleKeyPress(event)
 init(options)
 keepOptionInView(jQuery li, Boolean center)
-refresh()
 removeHover(HTMLElement li)
 selectOption(HTMLElement li, event)
 ```

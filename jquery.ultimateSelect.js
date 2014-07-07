@@ -31,7 +31,7 @@
                 return;
             }
         }
-
+        // grab the settings
         settings = this.getSettings(settings);
 
         this.typeTimer     = null;
@@ -39,8 +39,8 @@
         this.isMac         = navigator.platform.match(/mac/i);
         this.selectElement = select;
 
-        // Disable for iOS devices (their native controls are more suitable for a touch device)
-        if ( ! settings.mobile && navigator.userAgent.match(/iPad|iPhone|Android|IEMobile|BlackBerry/i)) {
+        // Disable for mobile devices
+        if ( ! settings.mobile && settings.isMobile()) {
             return false;
         }
 
@@ -65,6 +65,7 @@
     UltimateSelect.prototype.init = function (settings) {
         var $select = $(this.selectElement);
 
+        // if it's already initialized
         if ($select.data('ultimateSelect-control')) {
             return false;
         }
@@ -75,6 +76,8 @@
             inline   = $select.attr('multiple') || parseInt($select.attr('size'), 10) > 1,
             tabIndex = parseInt($select.prop('tabindex'), 10) || 0,
             $options,
+            isMobile = settings.isMobile(),
+            useNative = isMobile && (settings.mobileBehaviour === 'native'),
             self     = this;
 
         $control
@@ -112,8 +115,10 @@
 
         // Focus on control when label is clicked
         $select.bind('click.ultimateSelect', function (event) {
-            $control.focus();
-            event.preventDefault();
+            if( ! useNative) {
+                $control.focus();
+                event.preventDefault();
+            }
         });
 
         // Generate control
@@ -124,25 +129,29 @@
             $control
                 .append($options)
                 .data('ultimateSelect-options', $options)
-                .addClass('ultimateSelect-inline ultimateSelect-menuShowing')
-                .bind('keydown.ultimateSelect', function (event) {
-                    self.handleKeyDown(event);
-                })
-                .bind('keypress.ultimateSelect',function (event) {
-                    self.handleKeyPress(event);
-                })
-                .bind('click.ultimateSelect',function (event) {
-                    if (1 !== event.which) {
-                        return;
-                    }
-                    if ($(event.target).is('A.ultimateSelect-inline')) {
-                        event.preventDefault();
-                    }
-                    if (!$control.hasClass('ultimateSelect-focus')) {
-                        $control.focus();
-                    }
-                })
-                .insertAfter($select);
+                .addClass('ultimateSelect-inline ultimateSelect-menuShowing');
+
+            if( ! useNative) {
+                $control
+                    .bind('keydown.ultimateSelect', function (event) {
+                        self.handleKeyDown(event);
+                    })
+                    .bind('keypress.ultimateSelect',function (event) {
+                        self.handleKeyPress(event);
+                    })
+                    .bind('click.ultimateSelect',function (event) {
+                        if (1 !== event.which) {
+                            return;
+                        }
+                        if ($(event.target).is('A.ultimateSelect-inline')) {
+                            event.preventDefault();
+                        }
+                        if (!$control.hasClass('ultimateSelect-focus')) {
+                            $control.focus();
+                        }
+                    });
+            }
+            $control.insertAfter($select);
 
             // Auto-height based on size attribute
             if ( ! $select[0].style.height) {
@@ -177,34 +186,40 @@
                 .data('ultimateSelect-options', $options)
                 .addClass('ultimateSelect-dropdown')
                 .append($label)
-                .append($arrow)
-                .bind('click.ultimateSelect', function (event) {
-                    if ($control.hasClass('ultimateSelect-menuShowing')) {
-                        self.hideMenus();
-                    } else {
-                        event.stopPropagation();
+                .append($arrow);
+
+            if( ! useNative) {
+
+                $control
+                    .bind('click.ultimateSelect', function (event) {
+                        if ($control.hasClass('ultimateSelect-menuShowing')) {
+                            self.hideMenus();
+                        } else {
+                            event.stopPropagation();
+                            self.showMenu();
+                        }
+                    })
+                    .bind('keydown.ultimateSelect', function (event) {
+                        self.handleKeyDown(event);
+                    })
+                    .bind('keypress.ultimateSelect', function (event) {
+                        self.handleKeyPress(event);
+                    })
+                    .bind('open.ultimateSelect',function (event, triggerData) {
+                        if (triggerData && triggerData._ultimateSelect === true) {
+                            return;
+                        }
                         self.showMenu();
-                    }
-                })
-                .bind('keydown.ultimateSelect', function (event) {
-                    self.handleKeyDown(event);
-                })
-                .bind('keypress.ultimateSelect', function (event) {
-                    self.handleKeyPress(event);
-                })
-                .bind('open.ultimateSelect',function (event, triggerData) {
-                    if (triggerData && triggerData._ultimateSelect === true) {
-                        return;
-                    }
-                    self.showMenu();
-                })
-                .bind('close.ultimateSelect', function (event, triggerData) {
-                    if (triggerData && triggerData._ultimateSelect === true) {
-                        return;
-                    }
-                    self.hideMenus();
-                })
-                .insertAfter($select);
+                    })
+                    .bind('close.ultimateSelect', function (event, triggerData) {
+                        if (triggerData && triggerData._ultimateSelect === true) {
+                            return;
+                        }
+                        self.hideMenus();
+                    });
+            }
+
+            $control.insertAfter($select);
 
             this.disableSelection($control);
         }
@@ -213,6 +228,19 @@
             .addClass('ultimateSelect')
             .data('ultimateSelect-control', $control)
             .data('ultimateSelect-settings', settings);
+
+        // move the select inside the control
+        $select.prependTo($control);
+
+        // mobile behaviour
+        if(useNative) {
+            $control.addClass('ultimateSelect-mobile-native');
+            $select.on('change', function() {
+                self.refresh();
+            });
+        } else {
+            // TODO: Add custom popup for multiselect
+        }
 
         // hide the real select
         this.hideSelect();
@@ -347,16 +375,19 @@
             return;
         }
 
-        var $options = $control.data('ultimateSelect-options');
-        $options.remove();
-        $control.remove();
         $select
             .removeClass('ultimateSelect')
             .removeData('ultimateSelect-control')
             .data('ultimateSelect-control', null)
             .removeData('ultimateSelect-settings')
-            .data('ultimateSelect-settings', null);
-            this.showSelect();
+            .data('ultimateSelect-settings', null)
+            .insertBefore($control);
+
+        var $options = $control.data('ultimateSelect-options');
+        $options.remove();
+        $control.remove();
+
+        this.showSelect();
     };
 
     /**
@@ -400,9 +431,10 @@
             $select   = $(this.selectElement),
             $control  = $select.data('ultimateSelect-control'),
             settings = $select.data('ultimateSelect-settings'),
+            useNative = settings.isMobile() && (settings.mobileBehaviour === 'native'),
             $options  = $control.data('ultimateSelect-options');
 
-        if ($control.hasClass('ultimateSelect-disabled')) {
+        if ($control.hasClass('ultimateSelect-disabled') || useNative) {
             return false;
         }
 
@@ -1009,7 +1041,7 @@
      * @return {null}
      */
     UltimateSelect.prototype.showSelect = function() {
-        var $select = $(this.selectElement).show();
+        $(this.selectElement).show();
     };
     /**
      * Will merge the user settings with the default ones
@@ -1022,9 +1054,9 @@
             // Disables the widget for mobile devices
             mobile: true,
             // The show/hide transition for dropdown menus
-            menuTransition: 'default',
+            menuTransition: 'slide',
             // The show/hide transition speed
-            menuSpeed: 'normal',
+            menuSpeed: 1,
             // Flag to allow arrow keys to loop through options
             loopOptions: false,
             // Will be plused to top position if droplist will be show at the top
@@ -1034,12 +1066,18 @@
             // If false then showed droplist will not hide itself on window scroll event
             hideOnWindowScroll: true,
             // If set to false, the droplist will be always open towards the bottom
-            keepInViewport: true
+            keepInViewport: true,
+            // if mobile is true how should the select behave (native or custom)
+            mobileBehaviour: 'native',
+            // callback to determine if the current device is a mobile
+            isMobile: function() {
+                return navigator.userAgent.match(/iPad|iPhone|Android|IEMobile|BlackBerry/i);
+            }
         };
 
         return $.extend(true, this._settings, opt);
 
-    }
+    };
 
 
     /**
