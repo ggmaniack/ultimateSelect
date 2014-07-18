@@ -41,12 +41,12 @@
 
         // Disable for mobile devices
         if ( ! settings.mobile && settings.isMobile()) {
-            return false;
+            return;
         }
 
         // Element must be a select control
         if ('select' !== select.tagName.toLowerCase()) {
-            return false;
+            return;
         }
 
         this.init(settings);
@@ -58,7 +58,7 @@
     UltimateSelect.prototype.version = '1.3.0';
 
     /**
-     * @param {Object} options
+     * @param {Object} settings
      *
      * @returns {Boolean}
      */
@@ -437,7 +437,6 @@
         if ($control.hasClass('ultimateSelect-disabled') || useNative) {
             return false;
         }
-
         this.hideMenus();
 
         // Get top and bottom width of ultimateSelect
@@ -600,7 +599,6 @@
         if ($control.hasClass('ultimateSelect-disabled')) {
             return false;
         }
-
         if ($li.length === 0 || $li.hasClass('ultimateSelect-disabled')) {
             return false;
         }
@@ -613,10 +611,10 @@
                 var $affectedOptions;
                 if ($li.index() > $control.data('ultimateSelect-last-selected').index()) {
                     $affectedOptions = $li.siblings()
-                        .slice($control.data('ultimateSelect-last-selected').index(), li.index());
+                        .slice($control.data('ultimateSelect-last-selected').index(), $li.index());
                 } else {
                     $affectedOptions = $li.siblings()
-                        .slice(li.index(), $control.data('ultimateSelect-last-selected').index());
+                        .slice($li.index(), $control.data('ultimateSelect-last-selected').index());
                 }
                 $affectedOptions = $affectedOptions.not('.ultimateSelect-optgroup, .ultimateSelect-disabled');
                 if ($li.hasClass('ultimateSelect-selected')) {

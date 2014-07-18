@@ -1,8 +1,8 @@
 {
   "name": "jquery.ultimateSelect",
-  "title": "jquery ultimateSelect",
-  "description": "A style-able replacement for SELECT elements.",
-  "version": "v1.3.0",
+  "title": "jQuery UltimateSelect",
+  "description": "A styleable replacement for SELECT elements.",
+  "version": "v1.0.0",
   "keywords": ["select", "jQuery select", "ultimateSelect", "jQuery"],
   "homepage": "https://github.com/ionutvmi/ultimateSelect",
   "author": {
@@ -22,5 +22,8 @@
   },
   "bugs": {
     "url": "https://github.com/ionutvmi/ultimateSelect/issues"
-  }
+  },
+  "ignore": [
+    "**/*.html"
+  ]
 }
