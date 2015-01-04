@@ -1,0 +1,22 @@
+{
+  "name": "jquery.ultimateSelect",
+  "version": "1.0.0",
+  "homepage": "https://github.com/ionutvmi/ultimateSelect",
+  "authors": [
+    "Mihai Ionut Vilcu <ionutvmi@gmail.com>"
+  ],
+  "description": "A styleable replacement for SELECT elements.",
+  "keywords": [
+    "ultimateSelect",
+    "jquery",
+    "select"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

@@ -1,0 +1,189 @@
+/* Native select */
+.ultimateSelect select {
+    max-width: 100%;
+}
+
+/* Dropdown control */
+.ultimateSelect-dropdown {
+    min-width: 150px;
+    position: relative;
+    border: solid 1px #BBB;
+    line-height: 1.5;
+    text-decoration: none;
+    text-align: left;
+    color: #000;
+    outline: none;
+    vertical-align: middle;
+
+    background: #F2F2F2;
+    background: -moz-linear-gradient(top, #F8F8F8 1%, #E1E1E1 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(1%, #F8F8F8), color-stop(100%, #E1E1E1));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F8F8F8', endColorstr='#E1E1E1', GradientType=0);
+
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .75);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, .75);
+
+    border-radius: 4px;
+    display: inline-block;
+    cursor: default;
+}
+
+.ultimateSelect-dropdown.ultimateSelect-menuShowing-bottom {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.ultimateSelect-dropdown.ultimateSelect-menuShowing-top {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+
+/* Control label */
+.ultimateSelect-dropdown .ultimateSelect-label {
+    padding: 3px 8px;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Control right side arrow */
+.ultimateSelect-dropdown .ultimateSelect-arrow {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 23px;
+    height: 100%;
+    border-left: 1px solid #BBB;
+}
+.ultimateSelect-dropdown .ultimateSelect-arrow:before {
+    content: " ";
+    position: absolute;
+    border: 5px solid transparent;
+    border-top: 5px solid #000;
+    left: 0;
+    right: 0;
+    top: 50%;
+    margin: auto;
+    width: 0;
+    height: 0;
+}
+
+/* Dropdown menu */
+.ultimateSelect-dropdown-menu {
+    position: absolute;
+    z-index: 99999;
+    max-height: 200px;
+    min-height: 1em;
+    border: solid 1px #BBB; /* should be the same border width as .ultimateSelect-dropdown */
+    background: #FFF;
+    -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Inline control */
+.ultimateSelect-inline {
+    min-width: 150px;
+    max-width: 100%;
+    outline: none;
+    border: solid 1px #BBB;
+    background: #FFF;
+    display: inline-block;
+    border-radius: 4px;
+    overflow: auto;
+}
+
+
+/* Options */
+.ultimateSelect-options,
+.ultimateSelect-options li,
+.ultimateSelect-options li a {
+    list-style: none;
+    display: block;
+    cursor: default;
+    padding: 0;
+    margin: 0;
+}
+
+.ultimateSelect-options.ultimateSelect-options-top {
+    border-bottom:none;
+	margin-top:1px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.ultimateSelect-options.ultimateSelect-options-bottom {
+	border-top:none;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.ultimateSelect-options li a {
+    line-height: 1.5;
+    padding: 0 .5em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: 6px center no-repeat;
+}
+
+.ultimateSelect-options li:hover a {
+    background-color: #EEE;
+}
+
+.ultimateSelect-options li.ultimateSelect-disabled a {
+    color: #888;
+    background-color: transparent;
+}
+
+.ultimateSelect-options li.ultimateSelect-selected a {
+    background-color: #C8DEF4;
+}
+
+.ultimateSelect-options .ultimateSelect-optgroup {
+    color: #666;
+    background: #EEE;
+    font-weight: bold;
+    line-height: 1.5;
+    padding: 0 .3em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Disabled state */
+.ultimateSelect.ultimateSelect-disabled {
+    color: #888 !important;
+}
+
+.ultimateSelect-dropdown.ultimateSelect-disabled .ultimateSelect-arrow {
+    opacity: .5;
+    filter: alpha(opacity=50);
+    border-color: #666;
+}
+
+.ultimateSelect-inline.ultimateSelect-disabled {
+    color: #888 !important;
+}
+
+.ultimateSelect-inline.ultimateSelect-disabled .ultimateSelect-options A {
+    background-color: transparent !important;
+}
+
+
+/* Mobile native */
+.ultimateSelect.ultimateSelect-mobile-native {
+    position: relative;
+}
+.ultimateSelect.ultimateSelect-mobile-native select {
+    display: block !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+

@@ -3,6 +3,9 @@ ChangeLog UlitmateSelect
 
 v1.0.0
 ------
+- 04.Jan.2015 Adding tests
+    - changed the folder structure to accomodate the unit tests
+    - added the first unit tests
 - 06.Jul.2014 Initial refactor [Mihai Ionut Vilcu] 
     - removed the arrow image 
     - prefixed all the jquery vars with $

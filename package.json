@@ -2,8 +2,13 @@
   "name": "jquery.ultimateSelect",
   "title": "jQuery UltimateSelect",
   "description": "A styleable replacement for SELECT elements.",
-  "version": "v1.0.0",
-  "keywords": ["select", "jQuery select", "ultimateSelect", "jQuery"],
+  "version": "1.0.0",
+  "keywords": [
+    "select",
+    "jQuery select",
+    "ultimateSelect",
+    "jQuery"
+  ],
   "homepage": "https://github.com/ionutvmi/ultimateSelect",
   "author": {
     "name": "Miahi Ionut Vilcu",
@@ -16,6 +21,9 @@
       "url": "http://opensource.org/licenses/MIT"
     }
   ],
+  "scripts": {
+    "test": "start test/index.html"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/ionutvmi/ultimateSelect.git"
@@ -25,5 +33,12 @@
   },
   "ignore": [
     "**/*.html"
-  ]
+  ],
+  "devDependencies": {
+    "gulp": "^3.8.10",
+    "gulp-connect": "^2.2.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-uglify": "^1.0.2",
+    "open": "0.0.5"
+  }
 }

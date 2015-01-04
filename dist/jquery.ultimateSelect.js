@@ -1,4 +1,4 @@
-/*
+/*!*
  * jQuery ultimateSelect - A cosmetic, styleable replacement for SELECT elements
  *
  * Licensed under the MIT license: http://opensource.org/licenses/MIT
