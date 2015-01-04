@@ -36,7 +36,7 @@
 
         this.typeTimer     = null;
         this.typeSearch    = '';
-        this.isMac         = navigator.platform.match(/mac/i);
+        this.isMac         = settings.isMac();
         this.selectElement = select;
 
         // Disable for mobile devices
@@ -102,7 +102,7 @@
                 $select.trigger('blur');
             });
 
-        if (!$window.data('ultimateSelect-bindings')) {
+        if ( ! $window.data('ultimateSelect-bindings')) {
             $window
                 .data('ultimateSelect-bindings', true)
                 .bind('scroll.ultimateSelect', (settings.hideOnWindowScroll) ? this.hideMenus : $.noop)
@@ -151,7 +151,6 @@
                         }
                     });
             }
-            $control.insertAfter($select);
 
             // Auto-height based on size attribute
             if ( ! $select[0].style.height) {
@@ -171,7 +170,7 @@
                 tmp.remove();
                 $control.height(optionHeight * size);
             }
-            this.disableSelection($control);
+
         } else {
             // Dropdown controls
             var $label = $('<span class="ultimateSelect-label" />'),
@@ -219,10 +218,12 @@
                     });
             }
 
-            $control.insertAfter($select);
-
-            this.disableSelection($control);
         }
+
+        // add the control in the dom
+        $control.insertAfter($select);
+        this.disableSelection($control);
+
         // Store data for later use and show the control
         $select
             .addClass('ultimateSelect')
@@ -381,6 +382,7 @@
             .data('ultimateSelect-control', null)
             .removeData('ultimateSelect-settings')
             .data('ultimateSelect-settings', null)
+            // put the select in the original position
             .insertBefore($control);
 
         var $options = $control.data('ultimateSelect-options');
@@ -1070,6 +1072,9 @@
             // callback to determine if the current device is a mobile
             isMobile: function() {
                 return navigator.userAgent.match(/iPad|iPhone|Android|IEMobile|BlackBerry/i);
+            },
+            isMac: function () {
+                return navigator.platform.match(/mac/i);
             }
         };
 
